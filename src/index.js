@@ -1,5 +1,6 @@
 import './style/imports.scss';
 // get element from exampleButton.js
+
 import ExampleButton from './Components/exampleButton';
 
 const setup = () => {
