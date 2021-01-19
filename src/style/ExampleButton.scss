@@ -1,9 +1,0 @@
-@import 'partials/mixins';
-
-#exampleButton {
-    @include alignItems();
-
-    button {
-        background-color: red;
-    }
-}
