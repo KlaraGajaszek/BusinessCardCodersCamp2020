@@ -1,6 +1,7 @@
+import setup from './setup';
 
+//checkWinner();
 
-window.onload = () => {
-  let title = document.querySelector("#title");
+//changePlayer(); to wszystko na później
 
-};
+window.onload = setup;
