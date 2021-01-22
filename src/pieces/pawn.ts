@@ -19,8 +19,8 @@ class Pawn extends Piece {
     return possibleMoves;
   }
 
-// promote() { }
-// enPassant() { }
+  // promote() { }
+  // enPassant() { }
 }
 
 export default Pawn;
