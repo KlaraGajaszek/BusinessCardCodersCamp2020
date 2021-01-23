@@ -1,6 +1,9 @@
 import Pawn from './pieces/pawn';
+import Piece from './pieces/piece'
 
-const board: Array<number> = new Array(8);
+type Board = Array<(Array<(Piece | null)>)>
+
+const board: Board = new Array(8);
 for (let i = 0; i < 8; i++) {
     board[i] = new Array(8);
 }
