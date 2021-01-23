@@ -1,4 +1,4 @@
-import Pawn from './pieces/pawn';
+import Pawn from './pieces/pawn/pawn';
 
 const board: Array<number> = new Array(8);
 for (let i = 0; i < 8; i++) {

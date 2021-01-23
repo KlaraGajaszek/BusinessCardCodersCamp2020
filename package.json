@@ -4,7 +4,7 @@
   "description": "",
   "main": "App.ts",
   "scripts": {
-    "test:pawn": "jest --src/tests/pawn.test.js",
+    "test:pawn": "jest --src/pieces/pawn/__tests__/pawn.test.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "parcel index.html ",
     "build": "parcel build dist"
