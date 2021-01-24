@@ -1,6 +1,7 @@
 import board from '../board';
+import { BasicPiece } from '../types'
 
-abstract class Piece {
+abstract class Piece implements BasicPiece {
     display: string;
 
     constructor(public x: number, public y: number, protected side: string) {
@@ -10,7 +11,7 @@ abstract class Piece {
         this.display = '';
     }
     //id to tablica z kliknieta pozycja na ktra pionek ma sie poruszyc  
-    move(id: string) {
+    move(id: string): void {
         const newX = Number(id[0]);
         const newY = Number(id[2]);
 
@@ -25,6 +26,7 @@ abstract class Piece {
         (document.getElementById(id) as HTMLDivElement).innerHTML = this.display;
     }
 
+    //Change the type when implementing below method!
     findLegalMoves(): any { 
         return [];
     }
