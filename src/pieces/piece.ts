@@ -10,7 +10,7 @@ abstract class Piece implements BasicPiece {
         this.side! = side; //'black' or 'white'
         this.display = '';
     }
-    //id to tablica z kliknieta pozycja na ktra pionek ma sie poruszyc  
+    //   id to tablica z kliknieta pozycja na ktra pionek ma sie poruszyc
     move(id: string): void {
         const newX = Number(id[0]);
         const newY = Number(id[2]);
