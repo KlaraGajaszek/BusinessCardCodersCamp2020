@@ -1,7 +1,7 @@
 import Piece from '../piece';
 
 class Pawn extends Piece {
-  constructor(public x: number, public y: number, protected side: string) {
+  constructor(public x: number, public y: number, public side: string) {
     super(x, y, side);
     this.display = `<i class="fas fa-chess-pawn ${side}"></i>`;
   }
