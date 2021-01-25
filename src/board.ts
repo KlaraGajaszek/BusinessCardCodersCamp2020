@@ -1,6 +1,7 @@
-import Pawn from './pieces/pawn/pawn';
+import Pawn from './pieces/pawn';
+import { Field } from '../src/types'
 
-const board: Array<number> = new Array(8);
+const board: Field[][] = new Array(8);
 for (let i = 0; i < 8; i++) {
     board[i] = new Array(8);
 }

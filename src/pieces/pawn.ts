@@ -1,9 +1,8 @@
-import Piece from '../piece';
+import Piece from './piece';
 
 class Pawn extends Piece {
-  constructor(public x: number, public y: number, public side: string, public name: string = 'pawn') {
+  constructor(x: number, y: number, protected side: string) {
     super(x, y, side);
-    this.name = name;
     this.display = `<i class="fas fa-chess-pawn ${side}"></i>`;
   }
   // metoda findLegalMoves jak nazwa wskazuje znajduje wszytskie mozliwe ruchy
