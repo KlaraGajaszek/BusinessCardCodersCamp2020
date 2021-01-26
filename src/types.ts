@@ -1,6 +1,6 @@
 import Piece from './pieces/piece'
 
-export type Field = (Piece | null);
+export type Field = (Piece | undefined);
 
 // interface 
 export interface BasicPiece {

@@ -20,7 +20,7 @@
     "noFallthroughCasesInSwitch": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": false,
-    "types": ["@types/node"]
+    "types": ["@types/node", "jest", "@types/jest"]
   },
   "exclude": ["node_modules"]
 }

@@ -1,4 +1,4 @@
-import board from './board';
+import board from './board/board';
 
 // type any to  refactor 
 const touched = (e: any) => {

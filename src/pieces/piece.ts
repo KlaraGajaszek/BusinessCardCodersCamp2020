@@ -1,4 +1,4 @@
-import board from '../board';
+import board from '../board/board';
 import { BasicPiece } from '../types'
 
 abstract class Piece implements BasicPiece {
@@ -16,7 +16,7 @@ abstract class Piece implements BasicPiece {
         const newY = Number(id[2]);
 
         //clearing previous place
-        board[this.x][this.y] = null;
+        board[this.x][this.y] = undefined;
         (document.getElementById(`${this.x},${this.y}`) as HTMLDivElement).innerHTML = '';
         // debugger
         //setting new
