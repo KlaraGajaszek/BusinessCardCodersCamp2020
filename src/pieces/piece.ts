@@ -7,7 +7,7 @@ abstract class Piece implements BasicPiece {
     constructor(public x: number, public y: number, protected side: string) {
         this.x = x;
         this.y = y;
-        this.side! = side; //'black' or 'white'
+        this.side = side; //'black' or 'white'
         this.display = '';
     }
     //   id to tablica z kliknieta pozycja na ktra pionek ma sie poruszyc
