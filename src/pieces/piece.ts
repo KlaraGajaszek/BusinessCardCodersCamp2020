@@ -1,10 +1,10 @@
 import board from '../board';
-import { BasicPiece } from '../types'
+import { BasicPiece, Field } from '../types'
 
 abstract class Piece implements BasicPiece {
     display: string;
 
-    constructor(public x: number, public y: number, protected side: string) {
+    constructor(public x: number, public y: number, readonly side: string) {
         this.x = x;
         this.y = y;
         this.side! = side; //'black' or 'white'
@@ -27,9 +27,7 @@ abstract class Piece implements BasicPiece {
     }
 
     //Change the type when implementing below method!
-    findLegalMoves(): any { 
-        return [];
-    }
+    abstract findLegalMoves(board: Field[][]): string[];
 }
 
 export default Piece;
