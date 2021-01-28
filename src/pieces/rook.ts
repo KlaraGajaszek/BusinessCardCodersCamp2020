@@ -11,24 +11,46 @@ class Rook extends Piece {
   findLegalMoves(board: Field[][]): string[] {
     const possibleMoves: Array<string> = [];
 
-    for (let i = 1; this.x - i > -1 && !board[this.x - i][this.y]; i++) {
-      possibleMoves.push(`${this.x - i},${this.y}`);
+    for (let i = 1; this.x - i > -1; i++) {
+      if(!board[this.x - i][this.y]){
+        possibleMoves.push(`${this.x - i},${this.y}`);
+      } else if (board[this.x - i][this.y]?.side !== this.side) {
+        possibleMoves.push(`${this.x - i},${this.y}`);
+        break;
+      } else break;
+    }
+    
+
+    for (let i = 1; this.x + i < 8; i++) {
+      if(!board[this.x + i][this.y]) {
+        possibleMoves.push(`${this.x + i},${this.y}`);
+      } else if (board[this.x + i][this.y]?.side !== this.side) {
+        possibleMoves.push(`${this.x + i},${this.y}`);
+        break;
+      } else break;
     }
 
-    for (let i = 1; this.x + i < 8 && !board[this.x + i][this.y]; i++) {
-      possibleMoves.push(`${this.x + i},${this.y}`);
+    for (let i = 1; this.y - i > -1; i++) {
+      if(!board[this.x][this.y - i]) {
+        possibleMoves.push(`${this.x},${this.y - i}`);
+      } else if (board[this.x][this.y - i]?.side !== this.side) {
+        possibleMoves.push(`${this.x},${this.y - i}`);
+        break;
+      } else break;
     }
 
-    for (let i = 1; this.y - i > -1 && !board[this.x][this.y - i]; i++) {
-      possibleMoves.push(`${this.x},${this.y - i}`);
+    for (let i = 1; this.y + i < 8; i++) {
+      if(!board[this.x][this.y + i]) {
+        possibleMoves.push(`${this.x},${this.y + i}`);
+      } else if (board[this.x][this.y + i]?.side !== this.side) {
+        possibleMoves.push(`${this.x},${this.y + i}`);
+        break;
+      } else break;
     }
-
-    for (let i = 1; this.y + i < 8 && !board[this.x][this.y + i]; i++) {
-      possibleMoves.push(`${this.x},${this.y + i}`);
-    }
-
+    
     return possibleMoves;
   }
+
 }
 
 export default Rook;
