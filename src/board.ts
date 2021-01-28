@@ -1,5 +1,6 @@
 import Pawn from './pieces/pawn';
 import { Field } from '../src/types'
+import Rook from './pieces/rook';
 
 const board: Field[][] = new Array(8);
 for (let i = 0; i < 8; i++) {
@@ -10,5 +11,14 @@ let pawn = new Pawn(6, 0, 'white');
 board[pawn.x][pawn.y] = pawn;
 pawn = new Pawn(6, 1, 'white');
 board[pawn.x][pawn.y] = pawn;
+
+let rook = new Rook(7, 0, 'white');
+board[rook.x][rook.y] = rook;
+rook = new Rook(7, 7, 'white');
+board[rook.x][rook.y] = rook;
+rook = new Rook(0, 0, 'black');
+board[rook.x][rook.y] = rook;
+rook = new Rook(0, 7, 'black');
+board[rook.x][rook.y] = rook;
 
 export default board;
