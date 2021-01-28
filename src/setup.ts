@@ -7,6 +7,7 @@ const setup = () => {
             const square = document.createElement('div');
             square.id = `${x},${y}`;
             square.className = 'square';
+            square.innerHTML = board[x][y] ? board[x][y]!.display : '';
             square.className += x % 2 == y % 2 ? ' light' : ' dark';
             square?.addEventListener('click', (e) => {
                 touched(e);

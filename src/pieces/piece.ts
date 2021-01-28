@@ -1,13 +1,13 @@
 import board from '../board';
-import { BasicPiece } from '../types'
+import { BasicPiece, Field } from '../types'
 
 abstract class Piece implements BasicPiece {
     display: string;
 
-    constructor(public x: number, public y: number, protected side: string) {
+    constructor(public x: number, public y: number, readonly side: string) {
         this.x = x;
         this.y = y;
-        this.side! = side; //'black' or 'white'
+        this.side = side; //'black' or 'white'
         this.display = '';
     }
     //   id to tablica z kliknieta pozycja na ktra pionek ma sie poruszyc
@@ -27,9 +27,7 @@ abstract class Piece implements BasicPiece {
     }
 
     //Change the type when implementing below method!
-    findLegalMoves(): any { 
-        return [];
-    }
+    abstract findLegalMoves(board: Field[][]): string[];
 }
 
 export default Piece;
