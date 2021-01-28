@@ -2,7 +2,6 @@ import Piece from './piece';
 import { Field } from '../types'
 
 
-
 class Knight extends Piece {
     constructor(x: number, y: number, readonly side: string) {
         super(x, y, side);
@@ -55,16 +54,18 @@ class Knight extends Piece {
         } 
         return possibleMoves;
     }
-    findAttackingMoves() {
+    findAttackingMoves(board: Field[][]) {
         const attackingPossibleMoves: Array<string> = [];
-        let possibleMoves = this.findLegalMoves()
-        for (let i = 0; i < possibleMoves.length; i++){
-            if(board[possibleMoves[i][0]][possibleMoves[i][1]].side !== this.side && board[possibleMoves[i][0]][possibleMoves[i][1]] !== null){
+        let possibleMoves = this.findLegalMoves(board)
+        for (let i = 0; i < possibleMoves.length; i++) {
+            let possibleMovesSplited = possibleMoves[i].split(",")
+            const x = parseInt(possibleMovesSplited[0])
+            const y = parseInt(possibleMovesSplited[1])
+            if(board[x][y]?.side !== this.side && board[x][y] !== null){
                 attackingPossibleMoves.push(possibleMoves[i])
             }
         }
         return attackingPossibleMoves
-
     }
 }
 
