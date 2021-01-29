@@ -6,6 +6,7 @@ const setup = () => {
         for (let y = 0; y < board[x].length; y++) {
             const square = document.createElement('div');
             square.id = `${x},${y}`;
+            square.innerHTML = board[x][y] ? board[x][y]!.display : '';
             square.className = 'square';
             square.className += x % 2 == y % 2 ? ' light' : ' dark';
             square?.addEventListener('click', (e) => {

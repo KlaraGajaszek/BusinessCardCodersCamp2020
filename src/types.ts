@@ -10,4 +10,5 @@ export interface BasicPiece {
   move(id: string): void,
   //To change
   findLegalMoves(): any;
+  findAttackingMoves(): any;
 }

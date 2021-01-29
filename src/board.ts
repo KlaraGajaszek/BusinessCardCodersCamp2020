@@ -1,4 +1,5 @@
 import Pawn from './pieces/pawn';
+import Queen from './pieces/queen'
 import { Field } from '../src/types'
 
 const board: Field[][] = new Array(8);
@@ -10,5 +11,7 @@ let pawn = new Pawn(6, 0, 'white');
 board[pawn.x][pawn.y] = pawn;
 pawn = new Pawn(6, 1, 'white');
 board[pawn.x][pawn.y] = pawn;
+let queen = new Queen(7, 3, 'white')
+board[queen.x][queen.y] = queen;
 
 export default board;
