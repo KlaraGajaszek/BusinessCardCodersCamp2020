@@ -1,6 +1,5 @@
 import Pawn from './pieces/pawn';
 import Bishop from './pieces/bishop/bishop'
-
 import { Field } from '../src/types'
 
 const board: Field[][] = new Array(8);

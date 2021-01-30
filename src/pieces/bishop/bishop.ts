@@ -11,48 +11,44 @@ class Bishop extends Piece {
   findLegalMoves(board: Field[][]): string[] {
     const possibleMoves: string[] = [];
 
-    //RIGHT UP
-    for (let i = 1; this.x - i >= 0 && this.y + i <= 7; i++) {
-      if(board[this.x-i][this.y+i] && board[this.x-i][this.y+i]?.side !== this.side) {
-        possibleMoves.push(`${this.x - i},${this.y + i}`);
+    for (let ru = 1; this.x - ru >= 0 && this.y + ru <= 7; ru++) {
+      if(board[this.x-ru][this.y+ru] && board[this.x-ru][this.y+ru]?.side !== this.side) {
+        possibleMoves.push(`${this.x - ru},${this.y + ru}`);
         break;
-      } else if(board[this.x-i][this.y+i]) {
+      } else if(board[this.x-ru][this.y+ru]) {
         break;
       }
-      possibleMoves.push(`${this.x - i},${this.y + i}`);
+      possibleMoves.push(`${this.x - ru},${this.y + ru}`);
     }
 
-    //RIGHT DOWN
-    for (let i = 1; this.x + i <= 7 && this.y + i <= 7; i++) {
-      if(board[this.x+i][this.y+i] && board[this.x+i][this.y+i]?.side !== this.side) {
-        possibleMoves.push(`${this.x + i},${this.y + i}`);
+    for (let rd = 1; this.x + rd <= 7 && this.y + rd <= 7; rd++) {
+      if(board[this.x+rd][this.y+rd] && board[this.x+rd][this.y+rd]?.side !== this.side) {
+        possibleMoves.push(`${this.x + rd},${this.y + rd}`);
         break;
-      } else if(board[this.x+i][this.y+i]) {
+      } else if(board[this.x+rd][this.y+rd]) {
         break;
       }
-      possibleMoves.push(`${this.x + i},${this.y + i}`);
+      possibleMoves.push(`${this.x + rd},${this.y + rd}`);
     }
 
-    //LEFT DOWN
-    for (let i = 1; this.x + i <= 7 && this.y - i >= 0; i++) {
-      if(board[this.x+i][this.y-i] && board[this.x+i][this.y-i]?.side !== this.side) {
-        possibleMoves.push(`${this.x + i},${this.y - i}`);
+    for (let ld = 1; this.x + ld <= 7 && this.y - ld >= 0; ld++) {
+      if(board[this.x+ld][this.y-ld] && board[this.x+ld][this.y-ld]?.side !== this.side) {
+        possibleMoves.push(`${this.x + ld},${this.y - ld}`);
         break;
-      } else if(board[this.x+i][this.y-i]) {
+      } else if(board[this.x+ld][this.y-ld]) {
         break;
       }
-      possibleMoves.push(`${this.x + i},${this.y - i}`);
+      possibleMoves.push(`${this.x + ld},${this.y - ld}`);
     }
 
-    //LEFT UP
-    for (let i = 1; this.x - i >= 0 && this.y - i >= 0; i++) {
-      if(board[this.x-i][this.y-i] && board[this.x-i][this.y-i]?.side !== this.side) {
-        possibleMoves.push(`${this.x - i},${this.y - i}`);
+    for (let lu = 1; this.x - lu >= 0 && this.y - lu >= 0; lu++) {
+      if(board[this.x-lu][this.y-lu] && board[this.x-lu][this.y-lu]?.side !== this.side) {
+        possibleMoves.push(`${this.x - lu},${this.y - lu}`);
         break;
-      } else if(board[this.x-i][this.y-i]) {
+      } else if(board[this.x-lu][this.y-lu]) {
         break;
       }
-      possibleMoves.push(`${this.x - i},${this.y - i}`);
+      possibleMoves.push(`${this.x - lu},${this.y - lu}`);
     }
 
     return possibleMoves;
