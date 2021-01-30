@@ -8,55 +8,30 @@ class Knight extends Piece {
         // this.name = name;
         this.display = `<i class="fas fa-chess-knight ${side}"></i>`; //fontawesome knight
     }
-    findLegalMoves(board: Field[][]): string[] {
-        const possibleMoves: Array<string> = [];
 
-        if (this.x+1 <=7 && this.x+1 >= 0 && this.y+2 <= 7 && this.y+2 >= 0) {
-            if (board[this.x+1][this.y+2] === null || board[this.x+1][this.y+2]?.side !== this.side) {
-                possibleMoves.push(`${this.x+1},${this.y+2}`)
+    findLegalMoves(board: Field[][]): string[] {
+        const moves = [[2, 1], [1, 2], [-2, 1], [1, -2], [-2, -1], [2, -1], [-1, 2], [-1, -2]];
+        const possibleMoves: Array<string> = [];
+        let newX = 0;
+        let newY = 0;
+
+        for(const el of moves) {
+            newX = this.x + el[0];
+            newY = this.y + el[1];
+            if ( newX <= 7 && newX >= 0 && newY <= 7 && newY >= 0){
+                if(board[newX][newY] || board[newX][newY]?.side !== this.side) {
+                        possibleMoves.push(`${newX},${newY}`)
+                }
             }
         }
-        if (this.x+2 <=7 && this.x+2 >= 0 && this.y+1 <= 7 && this.y+1 >= 0) {
-            if (board[this.x+2][this.y+1] === null || board[this.x+2][this.y+1]?.side !== this.side ){
-            possibleMoves.push(`${this.x+2},${this.y+1}`)
-            }
-        }
-        if (this.x+2 <=7 && this.x+2 >= 0 && this.y-1 <= 7 && this.y-1 >= 0) {
-            if (board[this.x+2][this.y-1] === null || board[this.x+2][this.y-1]?.side !== this.side ){
-                possibleMoves.push(`${this.x+2},${this.y-1}`)
-            }
-            
-        }
-        if (this.x+1 <=7 && this.x+1 >= 0 && this.y-2 <= 7 && this.y-2 >= 0) {
-            if (board[this.x+1][this.y-2] === null || board[this.x+1][this.y-2]?.side !== this.side ){
-                possibleMoves.push(`${this.x+1},${this.y-2}`)
-            }
-        }
-        if (this.x-1 <=7 && this.x-1 >= 0 && this.y-2 <= 7 && this.y-2 >= 0) {
-            if (board[this.x-1][this.y-2] === null || board[this.x-1][this.y-2]?.side !== this.side ){
-                possibleMoves.push(`${this.x-1},${this.y-2}`)
-            }
-        }
-        if (this.x-2 <=7 && this.x-2 >= 0 && this.y-1 <= 7 && this.y-1 >= 0) {
-            if (board[this.x-2][this.y-1] === null || board[this.x-2][this.y-1]?.side !== this.side ){
-                possibleMoves.push(`${this.x-2},${this.y-1}`)
-            }
-        }
-        if (this.x-2 <=7 && this.x-2 >= 0 && this.y+1 <= 7 && this.y+1 >= 0) {
-            if (board[this.x-2][this.y+1] === null || board[this.x-2][this.y+1]?.side !== this.side ){
-                possibleMoves.push(`${this.x-2},${this.y+1}`)
-            }
-        }
-        if (this.x-1 <=7 && this.x-1 >= 0 && this.y+2 <= 7 && this.y+2 >= 0) {
-            if (board[this.x-1][this.y+2] === null || board[this.x-1][this.y+2]?.side !== this.side ){
-                possibleMoves.push(`${this.x-1},${this.y+2}`)
-            }  
-        } 
+
         return possibleMoves;
-    }
+    } 
+
     findAttackingMoves(board: Field[][]) {
         const attackingPossibleMoves: Array<string> = [];
         let possibleMoves = this.findLegalMoves(board)
+        
         for (let i = 0; i < possibleMoves.length; i++) {
             let possibleMovesSplited = possibleMoves[i].split(",")
             const x = parseInt(possibleMovesSplited[0])
@@ -65,6 +40,7 @@ class Knight extends Piece {
                 attackingPossibleMoves.push(possibleMoves[i])
             }
         }
+
         return attackingPossibleMoves
     }
 }
