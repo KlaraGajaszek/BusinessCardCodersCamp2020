@@ -1,17 +1,19 @@
-// import Piece from './piece';
-// import { Field } from '../types';
+import Piece from './piece';
+import Board from '../board';
 
-// class King extends Piece {
-//   constructor(x: number, y: number, protected side: string) {
-//     super(x, y, side);
-//     this.display = `<i class="fas fa-chess-king ${side}"></i>`;
-//   }
+class King extends Piece {
+    _display: string;
 
-//   findLegalMoves(board: Field[][]): string[] {
-//     const possibleMoves: string[] = new Array();
+    constructor(protected side: string) {
+        super(side);
+        this._display = `<i class="fas fa-chess-king ${side}"></i>`;
+    }
 
-//     return possibleMoves;
-//   }
-// }
+    findLegalMoves(board: Board, x: number, y: number): string[] {
+        const possibleMoves: string[] = new Array();
 
-// export default King;
+        return possibleMoves;
+    }
+}
+
+export default King;
