@@ -14,7 +14,6 @@ const touched = (e: MouseEvent, board: Board) => {
         }
 
         const possibleMoves = field.piece.findLegalMoves(board, x, y);
-        console.log(possibleMoves);
         for (let move of possibleMoves) {
             (document.getElementById(move) as HTMLDivElement).className += ` possibleMove`;
             (document.getElementById(move) as HTMLDivElement).addEventListener('click', () => {
