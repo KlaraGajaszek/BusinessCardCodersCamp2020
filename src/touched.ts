@@ -14,9 +14,10 @@ const touched = (e: MouseEvent, board: Board) => {
         }
 
         const possibleMoves = field.piece.findLegalMoves(board, x, y);
+        console.log(possibleMoves);
         for (let move of possibleMoves) {
             (document.getElementById(move) as HTMLDivElement).className += ` possibleMove`;
-            (document.getElementById(move) as HTMLDivElement).addEventListener('click', (e) => {
+            (document.getElementById(move) as HTMLDivElement).addEventListener('click', () => {
                 if (field.piece) {
                     field.piece.move(field, board.getField(parseInt(move[0]), parseInt(move[2])));
                 }
@@ -27,9 +28,9 @@ const touched = (e: MouseEvent, board: Board) => {
                             .className.replace(`possibleMove`, '');
 
                         //TODO: rozwiązać tematykę event listenerów sprytniej, przenosząc każdy do osobnego pliku
-                        //     let old_element = document.getElementById(`${x},${y}`) as HTMLDivElement;
-                        //     let new_element = old_element.cloneNode(true);
-                        //     old_element.parentNode?.replaceChild(new_element, old_element);
+                        let old_element = document.getElementById(`${x},${y}`) as HTMLDivElement;
+                        let new_element = old_element.cloneNode(true);
+                        old_element.parentNode?.replaceChild(new_element, old_element);
 
                         //     // document.getElementById(`${x},${y}`).removeEventListener('click');
                         document.getElementById(`${x},${y}`)?.addEventListener('click', (e) => {
