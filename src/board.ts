@@ -1,5 +1,10 @@
 import Field from './field';
 import Pawn from './pieces/pawn';
+import Rook from './pieces/rook';
+import Knight from './pieces/knight';
+import Bishop from './pieces/bishop';
+import Queen from './pieces/queen';
+import King from './pieces/king';
 
 class Board {
     readonly boardSize: number = 8;
@@ -26,6 +31,11 @@ class Board {
 
     public initBoard(): void {
         this.initPawns();
+        this.initRooks();
+        this.initKnights();
+        this.initBishops();
+        this.initQueens();
+        this.initKings();
         this.initEmptyFields();
     }
 
@@ -36,9 +46,40 @@ class Board {
         }
     }
 
+    private initRooks(): void {
+        this._fields[0][0] = new Field(0, 0, new Rook('black'));
+        this._fields[0][7] = new Field(0, 7, new Rook('black'));
+        this._fields[7][0] = new Field(7, 0, new Rook('white'));
+        this._fields[7][7] = new Field(7, 7, new Rook('white'));
+    }
+
+    private initKnights(): void {
+        this._fields[0][1] = new Field(0, 1, new Knight('black'));
+        this._fields[0][6] = new Field(0, 6, new Knight('black'));
+        this._fields[7][1] = new Field(7, 1, new Knight('white'));
+        this._fields[7][6] = new Field(7, 6, new Knight('white'));
+    }
+
+    private initBishops(): void {
+        this._fields[0][2] = new Field(0, 2, new Bishop('black'));
+        this._fields[0][5] = new Field(0, 5, new Bishop('black'));
+        this._fields[7][2] = new Field(7, 2, new Bishop('white'));
+        this._fields[7][5] = new Field(7, 5, new Bishop('white'));
+    }
+
+    private initQueens(): void {
+        this._fields[0][3] = new Field(0, 3, new Queen('black'));
+        this._fields[7][3] = new Field(7, 3, new Queen('white'));
+    }
+
+    private initKings(): void {
+        this._fields[0][4] = new Field(0, 4, new King('black'));
+        this._fields[7][4] = new Field(7, 4, new King('white'));
+    }
+
     private initEmptyFields(): void {
         for (let i = 0; i < this.boardSize; i++) {
-            if (i !== 1 && i !== 6) {
+            if (i !== 0 && i !== 1 && i !== 6 && i !== 7) {
                 for (let j = 0; j < this.boardSize; j++) {
                     this._fields[i][j] = new Field(i, j, null);
                 }
