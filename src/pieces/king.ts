@@ -1,16 +1,17 @@
-import Piece from './piece';
+// import Piece from './piece';
+// import { Field } from '../types';
 
-class King extends Piece {
-  constructor(x: number, y: number, protected side: string) {
-    super(x, y, side);
-    // this.name = name;
-    this.display = `<i class="fas fa-chess-king ${side}"></i>`; //fontawesome king
-  }
-  // findLegalMoves() {
-  //     const possibleMoves = [];
+// class King extends Piece {
+//   constructor(x: number, y: number, protected side: string) {
+//     super(x, y, side);
+//     this.display = `<i class="fas fa-chess-king ${side}"></i>`;
+//   }
 
-  //     return possibleMoves;
-  // }
-}
+//   findLegalMoves(board: Field[][]): string[] {
+//     const possibleMoves: string[] = new Array();
 
-export default King;
+//     return possibleMoves;
+//   }
+// }
+
+// export default King;
