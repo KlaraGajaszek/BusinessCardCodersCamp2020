@@ -1,18 +1,21 @@
 import Piece from './piece';
+import Board from '../board';
+import Field from '../field';
 
 class Pawn extends Piece {
-  constructor(x: number, y: number, protected side: string) {
-    super(x, y, side);
-    this.display = `<i class="fas fa-chess-pawn ${side}"></i>`;
+  _display: string;
+
+  constructor(protected side: string) {
+    super(side);
+    this._display = `<i class="fas fa-chess-pawn ${side}"></i>`;
   }
-  // metoda findLegalMoves jak nazwa wskazuje znajduje wszytskie mozliwe ruchy
-  findLegalMoves() {
-    // possibleMoves to możliwe ruchy któe pinek może wykonać jest ta tablica koordynatów "x,y"
-    const possibleMoves: Array<string | null> = [];
+
+  findLegalMoves(board: Board, actualField: Field): string[] {
+    const possibleMoves: Array<string> = new Array();
     if (this.side == 'white') {
       //this.x wskazuje na aktualna pozycje pionka pozycje liczymy od gornego lewego rogu bordu od 0 
-      this.x - 1 > 0 && possibleMoves.push(`${this.x - 1},${this.y}`);
-      this.x - 2 > 0 && possibleMoves.push(`${this.x - 2},${this.y}`);
+      actualField.x - 1 > 0 && possibleMoves.push(`${actualField.x - 1},${actualField.y}`);
+      actualField.x - 2 > 0 && possibleMoves.push(`${actualField.x - 2},${actualField.y}`);
     }
     return possibleMoves;
   }
