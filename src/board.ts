@@ -9,7 +9,7 @@ import King from './pieces/King';
 class Board {
     readonly boardSize: number = 8;
 
-    field: any;
+    field: any; // TO DO
 
     constructor() {
         this.field = new Array(this.boardSize);

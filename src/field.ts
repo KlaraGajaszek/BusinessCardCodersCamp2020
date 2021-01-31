@@ -7,7 +7,7 @@ import Queen from './pieces/Queen';
 import Rook from './pieces/Rook';
 
 class Field {
-    piece: Piece | Bishop | King | Pawn | Knight | Queen | Rook | null;
+    piece: Piece | Bishop | King | Pawn | Knight | Queen | Rook | null; // TO DO
     x: number;
     y: number;
 
