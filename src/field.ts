@@ -1,34 +1,24 @@
-import Piece from './pieces/piece';
+import Bishop from './pieces/Bishop';
+import King from './pieces/King';
+import Knight from './pieces/Knight';
+import Pawn from './pieces/Pawn';
+import Piece from './pieces/Piece';
+import Queen from './pieces/Queen';
+import Rook from './pieces/Rook';
 
 class Field {
-    private _piece: Piece | null;
-    private _x: number;
-    private _y: number;
+    piece: Piece | Bishop | King | Pawn | Knight | Queen | Rook | null;
+    x: number;
+    y: number;
 
     constructor(x: number, y: number, piece: Piece | null) {
-        this._piece = piece;
-        this._x = x;
-        this._y = y;
-    }
-
-    public get piece() {
-        return this._piece;
-    }
-
-    public set piece(piece: Piece | null) {
-        this._piece = piece;
-    }
-
-    public get x() {
-        return this._x;
-    }
-
-    public get y() {
-        return this._y;
+        this.piece = piece;
+        this.x = x;
+        this.y = y;
     }
 
     public isEmpty(): boolean {
-        return this._piece === null;
+        return this.piece === null;
     }
 }
 

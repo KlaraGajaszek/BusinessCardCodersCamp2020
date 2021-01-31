@@ -1,11 +1,11 @@
 import touched from './touched';
-import Board from './board';
+import Board from './Board';
 
 export const setup = () => {
     const board = new Board();
     board.initBoard();
 
-    const fields = board.fields;
+    const fields = board.field;
     for (let x = 0; x < board.boardSize; x++) {
         for (let y = 0; y < board.boardSize; y++) {
             const square = document.createElement('div');
@@ -14,8 +14,8 @@ export const setup = () => {
             square.className += x % 2 == y % 2 ? ' light' : ' dark';
 
             let field = fields[x][y];
-            if (!field.isEmpty()) {
-                square.innerHTML = field.piece!.display;
+            if (field) {
+                square.innerHTML = field.display;
             }
 
             square.addEventListener('click', (e) => {

@@ -1,19 +1,31 @@
-import Piece from './piece';
-import Board from '../board';
+import Piece from './Piece';
+import Board from '../Board';
 import Field from '../field';
 
 class King extends Piece {
-    _display: string;
+    display: string;
+    side: string;
+    x: number;
+    y: number;
 
-    constructor(protected side: string) {
-        super(side);
-        this._display = `<i class="fas fa-chess-king ${side}"></i>`;
+    constructor(x: number, y: number, side: string) {
+        super(x, y, side);
+        this.side = side;
+        this.x = x;
+        this.y = y;
+        this.display = `<i class="fas fa-chess-king ${side}"></i>`;
     }
 
     findLegalMoves(board: Board, actualField: Field): string[] {
         const possibleMoves: string[] = new Array();
 
         return possibleMoves;
+    }
+
+    findAttackingMoves(board: Board, actualField: Field): string[] {
+        const attackingMoves: string[] = new Array();
+    
+        return attackingMoves;
     }
 }
 
