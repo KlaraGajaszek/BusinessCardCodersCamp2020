@@ -3,7 +3,7 @@ import Field from '../field';
 
 export interface BasicPiece {
     move(oldField: Field, newField: Field): void;
-    findLegalMoves(board: Board, x: number, y: number): string[];
+    findLegalMoves(board: Board, actualField: Field): string[];
 }
 
 export default BasicPiece;

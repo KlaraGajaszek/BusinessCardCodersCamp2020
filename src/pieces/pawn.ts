@@ -1,5 +1,6 @@
 import Piece from './piece';
 import Board from '../board';
+import Field from '../field';
 
 class Pawn extends Piece {
   _display: string;
@@ -9,12 +10,12 @@ class Pawn extends Piece {
     this._display = `<i class="fas fa-chess-pawn ${side}"></i>`;
   }
 
-  findLegalMoves(board: Board, x: number, y: number): string[] {
+  findLegalMoves(board: Board, actualField: Field): string[] {
     const possibleMoves: Array<string> = new Array();
     if (this.side == 'white') {
       //this.x wskazuje na aktualna pozycje pionka pozycje liczymy od gornego lewego rogu bordu od 0 
-      x - 1 > 0 && possibleMoves.push(`${x - 1},${y}`);
-      x - 2 > 0 && possibleMoves.push(`${x - 2},${y}`);
+      actualField.x - 1 > 0 && possibleMoves.push(`${actualField.x - 1},${actualField.y}`);
+      actualField.x - 2 > 0 && possibleMoves.push(`${actualField.x - 2},${actualField.y}`);
     }
     return possibleMoves;
   }

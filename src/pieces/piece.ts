@@ -22,7 +22,7 @@ abstract class Piece implements BasicPiece {
         (document.getElementById(`${newField.x},${newField.y}`) as HTMLDivElement).innerHTML = this.display;
     }
 
-    abstract findLegalMoves(board: Board, x: number, y: number): string[];
+    abstract findLegalMoves(board: Board, actualField: Field): string[];
 }
 
 export default Piece;
