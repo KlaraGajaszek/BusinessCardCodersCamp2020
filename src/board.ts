@@ -1,4 +1,3 @@
-import Field from './field';
 import Pawn from './pieces/Pawn';
 import Rook from './pieces/Rook';
 import Knight from './pieces/Knight';
@@ -16,13 +15,6 @@ class Board {
         for (let i = 0; i < 8; i++) {
             this.field[i] = new Array(this.boardSize);
         }
-    }
-
-    public getField(x: number, y: number): Field {
-        if (x < 0 || x > 7 || y < 0 || y > 7) {
-            throw new Error('Index out of bound');
-        }
-        return this.field[x][y];
     }
 
     public initBoard(): void {
