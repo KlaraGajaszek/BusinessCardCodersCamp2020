@@ -1,42 +1,21 @@
 import Piece from './piece';
-import board from '../board';
+import Board from '../board';
+import Field from '../field';
 
 class Pawn extends Piece {
-  constructor(public x: number, public y: number, public side: string, public name: string = 'pawn') {
-    super(x, y, side);
-    this.name = name;
-    this.display = `<i class="fas fa-chess-pawn ${side}"></i>`;
-  }
-  
-  findLegalMoves() {
-    const possibleMoves: Array<string | null> = [];
+  _display: string;
 
-    if (this.side === 'white') {
-      // Two forward
-      if (this.x === 6) {
-        if (!board[this.x - 2][this.y] && !board[this.x - 1][this.y]) {
-          this.x - 2 > 0 && possibleMoves.push(`${this.x - 2},${this.y}`);
-        }
-      }
-      // One forward 
-      if (this.x - 1 >= 0) {
-        if (!board[this.x - 1][this.y]){
-          possibleMoves.push(`${this.x - 1},${this.y}`);
-        }
-      }
-    } else {
-      // Two forward
-      if (this.x === 1) {
-        if (!board[this.x + 2][this.y] && !board[this.x + 1][this.y]) {
-          this.x + 2 < 7 && possibleMoves.push(`${this.x + 2},${this.y}`);
-        }
-      }
-      // One forward
-      if (this.x + 1 <= 7) {
-        if (!board[this.x + 1][this.y]){
-          possibleMoves.push(`${this.x + 1},${this.y}`);
-        }
-      }
+  constructor(protected side: string) {
+    super(side);
+    this._display = `<i class="fas fa-chess-pawn ${side}"></i>`;
+  }
+
+  findLegalMoves(board: Board, actualField: Field): string[] {
+    const possibleMoves: Array<string> = new Array();
+    if (this.side == 'white') {
+      //this.x wskazuje na aktualna pozycje pionka pozycje liczymy od gornego lewego rogu bordu od 0 
+      actualField.x - 1 > 0 && possibleMoves.push(`${actualField.x - 1},${actualField.y}`);
+      actualField.x - 2 > 0 && possibleMoves.push(`${actualField.x - 2},${actualField.y}`);
     }
     return possibleMoves;
   }
