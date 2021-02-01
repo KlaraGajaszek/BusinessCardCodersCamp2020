@@ -5,7 +5,7 @@ import Field from '../field';
 abstract class Piece implements BasicPiece {
     abstract _display: string;
 
-    constructor(protected side: string) {
+    constructor(public side: string) {
         this.side = side;
     }
 
