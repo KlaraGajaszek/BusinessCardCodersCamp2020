@@ -16,7 +16,6 @@ class Rook extends Piece {
       if (board[move.charAt(0)][move.charAt(2)] && board[move.charAt(0)][move.charAt(2)].side === this.side) continue;
       possibleMoves.push(move);
     }
-    console.log(possibleMoves);
     return possibleMoves;
   }
 
@@ -58,7 +57,6 @@ class Rook extends Piece {
       }
       attackingMoves.push(`${this.x + r},${this.y}`);
     }
-    console.log(attackingMoves);
     return attackingMoves;
   }
 }
