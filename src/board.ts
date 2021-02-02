@@ -22,9 +22,9 @@ class Board {
         return this._fields;
     }
 
-    public getField(x: number, y: number): Field {
+    public getField(x: number, y: number): Field | null {
         if (x < 0 || x > 7 || y < 0 || y > 7) {
-            throw new Error('Index out of bound');
+            return null;
         }
         return this.fields[x][y];
     }
