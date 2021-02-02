@@ -37,6 +37,7 @@ class Queen extends Piece {
             possibleMoves.push(`${actualField.x - lu},${actualField.y - lu}`);
         };
         return possibleMoves;
+
     }
     findAttackingMoves(board: Board, actualField: Field): Array<string | null> {
         const attackingMoves: Array<string | null> = [];
@@ -66,7 +67,6 @@ class Queen extends Piece {
                 if (board.fields[actualField.x - u][actualField.y]?.piece!.side !== actualField.piece!.side)
                     attackingMoves.push(`${actualField.x - u},${actualField.y}`);
                 break;
-
             }
         };
         for (let ru = 1; actualField.y + ru <= 7 && actualField.x - ru >= 0; ru++) {
@@ -98,6 +98,7 @@ class Queen extends Piece {
             }
         };
         return attackingMoves;
+
     }
 }
 

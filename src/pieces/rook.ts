@@ -3,18 +3,20 @@ import Board from '../board';
 import Field from '../field';
 
 class Rook extends Piece {
-  _display: string;
 
-  constructor(protected side: string) {
-    super(side);
-    this._display = `<i class="fas fa-chess-rook ${side}"></i>`;
-  }
+    _display: string;
 
-  findLegalMoves(board: Board, actualField: Field): string[] {
-    const possibleMoves: string[] = new Array();
+    constructor(protected side: string) {
+        super(side);
+        this._display = `<i class="fas fa-chess-rook ${side}"></i>`;
+    }
 
-    return possibleMoves;
-  }
+    findLegalMoves(board: Board, actualField: Field): string[] {
+        const possibleMoves: string[] = new Array();
+
+        return possibleMoves;
+    }
+
 }
 
 export default Rook;
