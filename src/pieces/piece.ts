@@ -1,33 +1,30 @@
-import board from '../board';
-import { BasicPiece, Field } from '../types'
-
+import BasicPiece from './basicPiece';
+import Board from '../board';
+import Field from '../field';
 abstract class Piece implements BasicPiece {
-    display: string;
+    abstract _display: string;
 
-    constructor(public x: number, public y: number, readonly side: string) {
-        this.x = x;
-        this.y = y;
-        this.side = side; //'black' or 'white'
-        this.display = '';
+
+    constructor(public side: string) {
+        this.side = side;
+
     }
-    //   id to tablica z kliknieta pozycja na ktra pionek ma sie poruszyc
-    move(id: string): void {
-        const newX = Number(id[0]);
-        const newY = Number(id[2]);
 
-        //clearing previous place
-        board[this.x][this.y] = null;
-        (document.getElementById(`${this.x},${this.y}`) as HTMLDivElement).innerHTML = '';
-        // debugger
+    public get display(): string {
+        return this._display;
+    }
+
+
+    move(oldField: Field, newField: Field): void {
+        // clearing previous place
+        oldField.piece = null;
+        (document.getElementById(`${oldField.x},${oldField.y}`) as HTMLDivElement).innerHTML = '';
         //setting new
-        this.x = newX;
-        this.y = newY;
-        board[this.x][this.y] = this;
-        (document.getElementById(id) as HTMLDivElement).innerHTML = this.display;
+        newField.piece = this;
+        (document.getElementById(`${newField.x},${newField.y}`) as HTMLDivElement).innerHTML = this.display;
     }
 
-    //Change the type when implementing below method!
-    abstract findLegalMoves(board: Field[][]): string[];
+    abstract findLegalMoves(board: Board, actualField: Field): string[];
 }
 
 export default Piece;
