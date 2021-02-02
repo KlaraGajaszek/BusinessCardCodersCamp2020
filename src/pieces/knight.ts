@@ -39,7 +39,6 @@ class Knight extends Piece {
                 legalMoves.push(attackMoves[i])
             }
         }
-        console.log(legalMoves)
         return legalMoves;
     }
 }
