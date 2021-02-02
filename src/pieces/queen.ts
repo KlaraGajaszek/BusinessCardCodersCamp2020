@@ -1,17 +1,20 @@
 import Piece from './piece';
+import Board from '../board';
+import Field from '../field';
 
 class Queen extends Piece {
-    constructor(x: number, y: number, protected side: string) {
-        super(x, y, side);
-        // this.name = name;
-        this.display = `<i class="fas fa-chess-queen ${side}"></i>`; //fontawesome queen
+    _display: string;
+
+    constructor(protected side: string) {
+        super(side);
+        this._display = `<i class="fas fa-chess-queen ${side}"></i>`;
     }
 
-    // findLegalMoves() {
-    //     const possibleMoves = [];
-    
-    //     return possibleMoves;
-    // }
+    findLegalMoves(board: Board, actualField: Field): string[] {
+        const possibleMoves: string[] = new Array();
+
+        return possibleMoves;
+    }
 }
 
 export default Queen;
