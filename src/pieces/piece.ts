@@ -1,11 +1,12 @@
 import BasicPiece from './basicPiece';
 import Board from '../board';
 import Field from '../field';
+import PossibleMoves from '../possibleMoves';
 
 abstract class Piece implements BasicPiece {
     abstract _display: string;
 
-    constructor(protected side: string) {
+    constructor(public side: string) {
         this.side = side;
     }
 
@@ -22,7 +23,7 @@ abstract class Piece implements BasicPiece {
         (document.getElementById(`${newField.x},${newField.y}`) as HTMLDivElement).innerHTML = this.display;
     }
 
-    abstract findLegalMoves(board: Board, actualField: Field): string[];
+    abstract findLegalMoves(board: Board, actualField: Field): PossibleMoves;
 }
 
 export default Piece;
