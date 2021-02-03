@@ -11,82 +11,56 @@ class Rook extends Piece {
   }
 
   findLegalMoves(board: Board, actualField: Field): string[] {
-    const possibleMoves: string[] = new Array();
+    const possibleMoves = [];
     const attackingMoves = this.findAttackingMoves(board, actualField);
 
-    for (let move of attackingMoves) possibleMoves.push(move);
-
-    for (let u = 1; u <= 7; u++) {
-      if (actualField.y - u < 0) break;
-      if (board.fields[actualField.x][actualField.y - u].piece) break;
-      else possibleMoves.push(`${actualField.x},${actualField.y - u}`);
-    }
-
-    for (let d = 1; d <= 7; d++) {
-      if (actualField.y + d > 7) break;
-      if (board.fields[actualField.x][actualField.y + d].piece) break;
-      else possibleMoves.push(`${actualField.x},${actualField.y + d}`);
-    }
-
-    for (let l = 1; l <= 7; l++) {
-      if (actualField.x - l < 0) break;
-      if (board.fields[actualField.x - l][actualField.y].piece) break;
-      else possibleMoves.push(`${actualField.x - l},${actualField.y}`);
-    }
-
-    for (let r = 1; r <= 7; r++) {
-      if (actualField.x + r > 7) break;
-      if (board.fields[actualField.x + r][actualField.y].piece) break;
-      else possibleMoves.push(`${actualField.x + r},${actualField.y}`);
+    for (let move of attackingMoves) {
+      const splitedMove = move.split(',');
+      const x = parseInt(splitedMove[0]);
+      const y = parseInt(splitedMove[1]);
+      if (board.fields[x][y].piece && board.fields[x][y].piece!.side === actualField.piece!.side) continue;
+      possibleMoves.push(move);
     }
     return possibleMoves;
   }
 
   findAttackingMoves(board: Board, actualField: Field): string[] {
-    const attackingMoves: string[] = new Array();
+    const attackingMoves = [];
 
     for (let u = 1; u <= 7; u++) {
       if (actualField.y - u < 0) break;
       if (board.fields[actualField.x][actualField.y - u].piece) {
-        if (board.fields[actualField.x][actualField.y - u].piece!.side === actualField.piece!.side) break;
-        else {
-          attackingMoves.push(`${actualField.x},${actualField.y - u}`);
-          break;
-        }
+        attackingMoves.push(`${actualField.x},${actualField.y - u}`);
+        break;
       }
+      attackingMoves.push(`${actualField.x},${actualField.y - u}`);
     }
 
     for (let d = 1; d <= 7; d++) {
       if (actualField.y + d > 7) break;
       if (board.fields[actualField.x][actualField.y + d].piece) {
-        if (board.fields[actualField.x][actualField.y + d].piece!.side === actualField.piece!.side) break;
-        else {
-          attackingMoves.push(`${actualField.x},${actualField.y + d}`);
-          break;
-        }
+        attackingMoves.push(`${actualField.x},${actualField.y + d}`);
+        break;
       }
+      attackingMoves.push(`${actualField.x},${actualField.y + d}`);
     }
 
     for (let l = 1; l <= 7; l++) {
       if (actualField.x - l < 0) break;
       if (board.fields[actualField.x - l][actualField.y].piece) {
-        if (board.fields[actualField.x - l][actualField.y].piece!.side === actualField.piece!.side) break;
-        else {
-          attackingMoves.push(`${actualField.x - l},${actualField.y}`);
-          break;
-        }
+        attackingMoves.push(`${actualField.x - l},${actualField.y}`);
+        break;
       }
+      attackingMoves.push(`${actualField.x - l},${actualField.y}`);
     }
 
     for (let r = 1; r <= 7; r++) {
       if (actualField.x + r > 7) break;
       if (board.fields[actualField.x + r][actualField.y].piece) {
-        if (board.fields[actualField.x + r][actualField.y].piece!.side === actualField.piece!.side) break;
-        else {
-          attackingMoves.push(`${actualField.x + r},${actualField.y}`);
-          break;
-        }
+        attackingMoves.push(`${actualField.x + r},${actualField.y}`);
+        break;
       }
+      attackingMoves.push(`${actualField.x + r},${actualField.y}`);
     }
     return attackingMoves;
   }
