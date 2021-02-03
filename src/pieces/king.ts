@@ -1,7 +1,6 @@
 import Piece from './piece';
 import Board from '../board';
 import Field from '../field';
-import PossibleMoves from '../possibleMoves';
 
 class King extends Piece {
     _display: string;
@@ -12,25 +11,21 @@ class King extends Piece {
         this._display = `<i class="fas fa-chess-king ${side}"></i>`;
     }
 
-    findLegalMoves(board: Board, actualField: Field): PossibleMoves {
+    findLegalMoves(board: Board, actualField: Field): string[] {
         const possibleMoves: Array<string> = new Array();
-        const possibleAttacks: Array<string> = new Array();
         const x = actualField.x;
         const y = actualField.y;
 
         this.offsets.forEach(offset => {
             let field: Field | null = board.getField(x + offset.x, y + offset.y);
-            if (field?.isEmpty()) {
-                possibleMoves.push(`${field.x},${field.y}`);
-            } else if (field?.piece?.side !== this.side) {
-                possibleAttacks.push(`${field?.x},${field?.y}`);
+            if (field !== null) {
+                if (field.isEmpty() || field.piece?.side !== this.side) {
+                    possibleMoves.push(`${field.x},${field.y}`);
+                }
             }
         });
-
-        return {
-            'possibleMoves': possibleMoves,
-            'possibleAttacks': possibleAttacks
-        };
+        console.log(possibleMoves);
+        return possibleMoves;
     }
 }
 

@@ -7,7 +7,7 @@ const touched = (e: MouseEvent, board: Board) => {
         const x: number = parseInt((target as HTMLDivElement).id[0]);
         const y: number = parseInt((target as HTMLDivElement).id[2]);
 
-        const field: Field = board.getField(x, y);
+        const field: Field | null = board.getField(x, y);
         if (!field || !field.piece) {
             return;
         }
@@ -17,7 +17,10 @@ const touched = (e: MouseEvent, board: Board) => {
             (document.getElementById(move) as HTMLDivElement).className += ` possibleMove`;
             (document.getElementById(move) as HTMLDivElement).addEventListener('click', () => {
                 if (field.piece) {
-                    field.piece.move(field, board.getField(parseInt(move[0]), parseInt(move[2])));
+                    let newField = board.getField(parseInt(move[0]), parseInt(move[2]))
+                    if (newField) {
+                        field.piece.move(field, newField);
+                    }
                 }
                 for (let x = 0; x < board.boardSize; x++) {
                     for (let y = 0; y < board.boardSize; y++) {
