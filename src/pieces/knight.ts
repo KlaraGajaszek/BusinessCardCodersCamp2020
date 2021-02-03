@@ -29,10 +29,10 @@ class Knight extends Piece {
     } 
     findLegalMoves(board: Board, actualField: Field): string[] {
         const legalMoves: Array<string> = [];
-        let attackMoves = this.findAttackMoves(board, actualField)
+        const attackMoves = this.findAttackMoves(board, actualField)
         
         for (let i = 0; i < attackMoves.length; i++) {
-            let movesSplited = attackMoves[i].split(",")
+            const movesSplited = attackMoves[i].split(",")
             const x = parseInt(movesSplited[0])
             const y = parseInt(movesSplited[1])
             if(board.fields[x][y].piece?.side !== this.side || !board.fields[x][y].piece) {
