@@ -1,10 +1,10 @@
-import Field from './field';
-import Pawn from './pieces/pawn';
-import Rook from './pieces/rook';
-import Knight from './pieces/knight';
-import Bishop from './pieces/bishop';
-import Queen from './pieces/queen';
-import King from './pieces/king';
+import Field from './Field';
+import Pawn from './pieces/Pawn';
+import Rook from './pieces/Rook';
+import Knight from './pieces/Knight';
+import Bishop from './pieces/Bishop';
+import Queen from './pieces/Queen';
+import King from './pieces/King';
 
 
 class Board {

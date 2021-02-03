@@ -1,6 +1,6 @@
-import BasicPiece from './basicPiece';
-import Board from '../board';
-import Field from '../field';
+import BasicPiece from '../types';
+import Board from '../Board';
+import Field from '../Field';
 
 abstract class Piece implements BasicPiece {
     abstract _display: string;

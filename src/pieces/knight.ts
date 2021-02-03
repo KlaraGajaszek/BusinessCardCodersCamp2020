@@ -1,7 +1,7 @@
   
-import Piece from './piece';
-import Board from '../board';
-import Field from '../field';
+import Piece from './Piece';
+import Board from '../Board';
+import Field from '../Field';
 
 class Knight extends Piece {
     _display: string;
@@ -44,8 +44,9 @@ class Knight extends Piece {
             }
         }
 
+        console.log(attackingPossibleMoves);
         return attackingPossibleMoves
-}
+    }
 }
 
 export default Knight;
