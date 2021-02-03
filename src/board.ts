@@ -5,6 +5,7 @@ import Bishop from './pieces/Bishop';
 import Queen from './pieces/Queen';
 import King from './pieces/King';
 
+
 class Board {
     readonly boardSize: number = 8;
 
