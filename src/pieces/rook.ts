@@ -20,8 +20,7 @@ class Rook extends Piece {
   findAttackingMoves(board: Board, actualField: Field): string[] {
     const attackingMoves = [];
 
-    for (let u = 1; u <= 7; u++) {
-      if (actualField.y - u < 0) break;
+    for (let u = 1; actualField.y - u > -1; u++) {
       if (board.fields[actualField.x][actualField.y - u].piece) {
         attackingMoves.push(`${actualField.x},${actualField.y - u}`);
         break;
@@ -29,8 +28,7 @@ class Rook extends Piece {
       attackingMoves.push(`${actualField.x},${actualField.y - u}`);
     }
 
-    for (let d = 1; d <= 7; d++) {
-      if (actualField.y + d > 7) break;
+    for (let d = 1; actualField.y + d < 8; d++) {
       if (board.fields[actualField.x][actualField.y + d].piece) {
         attackingMoves.push(`${actualField.x},${actualField.y + d}`);
         break;
@@ -38,8 +36,7 @@ class Rook extends Piece {
       attackingMoves.push(`${actualField.x},${actualField.y + d}`);
     }
 
-    for (let l = 1; l <= 7; l++) {
-      if (actualField.x - l < 0) break;
+    for (let l = 1; actualField.x - l > -1; l++) {
       if (board.fields[actualField.x - l][actualField.y].piece) {
         attackingMoves.push(`${actualField.x - l},${actualField.y}`);
         break;
@@ -47,8 +44,7 @@ class Rook extends Piece {
       attackingMoves.push(`${actualField.x - l},${actualField.y}`);
     }
 
-    for (let r = 1; r <= 7; r++) {
-      if (actualField.x + r > 7) break;
+    for (let r = 1; actualField.x + r < 8; r++) {
       if (board.fields[actualField.x + r][actualField.y].piece) {
         attackingMoves.push(`${actualField.x + r},${actualField.y}`);
         break;
