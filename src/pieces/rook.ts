@@ -11,16 +11,9 @@ class Rook extends Piece {
   }
 
   findLegalMoves(board: Board, actualField: Field): string[] {
-    const possibleMoves = [];
     const attackingMoves = this.findAttackingMoves(board, actualField);
-
-    for (let move of attackingMoves) {
-      const splitedMove = move.split(',');
-      const x = parseInt(splitedMove[0]);
-      const y = parseInt(splitedMove[1]);
-      if (board.fields[x][y].piece && board.fields[x][y].piece!.side === actualField.piece!.side) continue;
-      possibleMoves.push(move);
-    }
+    const possibleMoves = attackingMoves.filter(move => !board.fields[+(move[0])][+(move[2])].piece ||
+      board.fields[+(move[0])][+(move[2])].piece!.side !== actualField.piece!.side);
     return possibleMoves;
   }
 
