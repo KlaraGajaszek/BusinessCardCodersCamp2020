@@ -22,11 +22,10 @@ class Knight extends Piece {
         for(const el of moves) {
             newX = x + el[0];
             newY = y + el[1];
-            if ( newX <= 7 && newX >= 0 && newY <= 7 && newY >= 0){
-                if(board.fields[newX][newY] && board.fields[newX][newY].piece?.side !== this.side) {
-                        possibleMoves.push(`${newX},${newY}`)
+            if ( newX <= 7 && newX >= 0 && newY <= 7 && newY >= 0 &&
+                board.fields[newX][newY] && board.fields[newX][newY].piece?.side !== this.side){
+                    possibleMoves.push(`${newX},${newY}`)
                 }
-            }
         }
 
         return possibleMoves;
@@ -44,7 +43,6 @@ class Knight extends Piece {
             }
         }
 
-        console.log(attackingPossibleMoves);
         return attackingPossibleMoves
     }
 }

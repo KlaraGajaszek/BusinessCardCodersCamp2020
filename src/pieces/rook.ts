@@ -15,6 +15,12 @@ class Rook extends Piece {
 
         return possibleMoves;
     }
+
+    findAttackingMoves(board: Board, actualField: Field): string[] {
+        const possibleMoves: string[] = new Array();
+    
+        return possibleMoves;
+    }
 }
 
 export default Rook;

@@ -10,6 +10,14 @@ class Game {
         this.setup()
     }
 
+    afterMove(field: Field, move: string) {
+        this.movePiece(field, move)
+
+        // Logika która powinna znajdować sie po ruchu znajduje się tutaj,
+        // oczywiście chodzi tutaj o wywołania odpowiednich funkcji tylko :)
+        // czyli np. sprawdzenie czy jest szach, mat, pat, zmiana tury itp. 
+    }
+
     setup(){
         const fields = this.board.fields;
         for (let x = 0; x < this.board.boardSize; x++) {
@@ -25,7 +33,7 @@ class Game {
                 }
 
                 square.addEventListener('click', (e) => {
-                    this.touched(e, this.board);
+                    this.touched(e);
                 });
 
                 document.getElementById('board')?.appendChild(square);
@@ -33,40 +41,41 @@ class Game {
         }
     }
 
-    touched(e: MouseEvent, board: Board) {
+    touched(e: MouseEvent) {
         const target = e.currentTarget;
         if (target) {
             const x: number = parseInt((target as HTMLDivElement).id[0]);
             const y: number = parseInt((target as HTMLDivElement).id[2]);
 
-            const field: Field = board.getField(x, y);
-            if (!field || !field.piece) {
-                return;
-            }
+            const field: Field = this.board.getField(x, y);
+            if (!field?.piece) return;
 
-            const possibleMoves = field.piece.findLegalMoves(board, field);
+            const possibleMoves = field.piece.findLegalMoves(this.board, field);
             for (let move of possibleMoves) {
                 (document.getElementById(move) as HTMLDivElement).className += ` possibleMove`;
                 (document.getElementById(move) as HTMLDivElement).addEventListener('click', () => {
-                    if (field.piece) {
-                        field.piece.move(field, board.getField(parseInt(move[0]), parseInt(move[2])));
-                    }
-                    for (let x = 0; x < board.boardSize; x++) {
-                        for (let y = 0; y < board.boardSize; y++) {
-                            (document.getElementById(`${x},${y}`) as HTMLDivElement).className = (document
-                                .getElementById(`${x},${y}`) as HTMLDivElement)
-                                .className.replace(`possibleMove`, '');
+                    this.afterMove(field, move)
+                });
+            }
+        }
+    }
 
-                            //TODO: rozwiązać tematykę event listenerów sprytniej, przenosząc każdy do osobnego pliku
-                            let old_element = document.getElementById(`${x},${y}`) as HTMLDivElement;
-                            let new_element = old_element.cloneNode(true);
-                            old_element.parentNode?.replaceChild(new_element, old_element);
+    movePiece(field: Field, move: string) {
+        if (field.piece) {
+            field.piece.move(field, this.board.getField(parseInt(move[0]), parseInt(move[2])));
+        }
+        for (let x = 0; x < this.board.boardSize; x++) {
+            for (let y = 0; y < this.board.boardSize; y++) {
+                (document.getElementById(`${x},${y}`) as HTMLDivElement).className = (document
+                    .getElementById(`${x},${y}`) as HTMLDivElement)
+                    .className.replace(`possibleMove`, '');
 
-                            document.getElementById(`${x},${y}`)?.addEventListener('click', (e) => {
-                                this.touched(e, board);
-                            });
-                        }
-                    }
+                let old_element = document.getElementById(`${x},${y}`) as HTMLDivElement;
+                let new_element = old_element.cloneNode(true);
+                old_element.parentNode?.replaceChild(new_element, old_element);
+
+                document.getElementById(`${x},${y}`)?.addEventListener('click', (e) => {
+                    this.touched(e);
                 });
             }
         }
