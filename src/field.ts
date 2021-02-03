@@ -1,34 +1,18 @@
 import Piece from './pieces/Piece';
 
 class Field {
-    private _piece: Piece | null;
-    private _x: number;
-    private _y: number;
+    piece: Piece | null;
+    x: number;
+    y: number;
 
     constructor(x: number, y: number, piece: Piece | null) {
-        this._piece = piece;
-        this._x = x;
-        this._y = y;
+        this.piece = piece;
+        this.x = x;
+        this.y = y;
     }
 
-    public get piece() {
-        return this._piece;
-    }
-
-    public set piece(piece: Piece | null) {
-        this._piece = piece;
-    }
-
-    public get x() {
-        return this._x;
-    }
-
-    public get y() {
-        return this._y;
-    }
-
-    public isEmpty(): boolean {
-        return this._piece === null;
+    isEmpty(): boolean {
+        return this.piece === null;
     }
 }
 

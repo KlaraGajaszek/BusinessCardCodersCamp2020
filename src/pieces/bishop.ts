@@ -3,11 +3,11 @@ import Board from '../Board';
 import Field from '../Field';
 
 class Bishop extends Piece {
-  _display: string;
+  display: string;
 
   constructor(side: string) {
     super(side);
-    this._display = `<i class="fas fa-chess-bishop ${side}"></i>`;
+    this.display = `<i class="fas fa-chess-bishop ${side}"></i>`;
   }
 
   findLegalMoves(board: Board, actualField: Field): string[] {
