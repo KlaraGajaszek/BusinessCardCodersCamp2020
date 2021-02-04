@@ -1,13 +1,13 @@
-import Piece from './piece';
-import Board from '../board';
-import Field from '../field';
+import Piece from './Piece';
+import Board from '../Board';
+import Field from '../Field';
 
 class Pawn extends Piece {
-  _display: string;
+  display: string;
 
   constructor(side: string) {
     super(side);
-    this._display = `<i class="fas fa-chess-pawn ${side}"></i>`;
+    this.display = `<i class="fas fa-chess-pawn ${side}"></i>`;
   }
 
   findLegalMoves(board: Board, actualField: Field): string[] {
@@ -78,9 +78,6 @@ class Pawn extends Piece {
     }
     return attackingMoves;
   }
-
-  // promote() { }
-  // enPassant() { }
 }
 
 export default Pawn;

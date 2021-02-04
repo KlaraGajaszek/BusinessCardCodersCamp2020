@@ -1,16 +1,17 @@
-import Piece from './piece';
-import Board from '../board';
-import Field from '../field';
+  
+import Piece from './Piece';
+import Board from '../Board';
+import Field from '../Field';
 
 class Knight extends Piece {
-    _display: string;
+    display: string;
 
     constructor(side: string) {
         super(side);
-        this._display = `<i class="fas fa-chess-knight ${side}"></i>`;
+        this.display = `<i class="fas fa-chess-knight ${side}"></i>`;
     }
 
-    findAttackMoves(board: Board, actualField: Field): string[] {
+    findAttackingMoves(board: Board, actualField: Field): string[] {
         const moves = [[2, 1], [1, 2], [-2, 1], [1, -2], [-2, -1], [2, -1], [-1, 2], [-1, -2]];
         const attackMoves: string[] = new Array();
         const x = actualField.x;
@@ -25,11 +26,12 @@ class Knight extends Piece {
                         attackMoves.push(`${newX},${newY}`)
             }
         }
-        return attackMoves;
-    } 
+        return attackMoves; 
+    }
+
     findLegalMoves(board: Board, actualField: Field): string[] {
         const legalMoves: Array<string> = [];
-        const attackMoves = this.findAttackMoves(board, actualField)
+        const attackMoves = this.findAttackingMoves(board, actualField)
         
         for (let i = 0; i < attackMoves.length; i++) {
             const movesSplited = attackMoves[i].split(",")

@@ -1,8 +1,9 @@
-import BasicPiece from './basicPiece';
-import Board from '../board';
-import Field from '../field';
+import {BasicPiece} from '../types';
+import Board from '../Board';
+import Field from '../Field';
+
 abstract class Piece implements BasicPiece {
-    abstract _display: string;
+    abstract display: string;
 
 
     constructor(public side: string) {
@@ -10,21 +11,17 @@ abstract class Piece implements BasicPiece {
 
     }
 
-    public get display(): string {
-        return this._display;
-    }
-
-
     move(oldField: Field, newField: Field): void {
-        // clearing previous place
+
         oldField.piece = null;
         (document.getElementById(`${oldField.x},${oldField.y}`) as HTMLDivElement).innerHTML = '';
-        //setting new
+
         newField.piece = this;
         (document.getElementById(`${newField.x},${newField.y}`) as HTMLDivElement).innerHTML = this.display;
     }
 
     abstract findLegalMoves(board: Board, actualField: Field): string[];
+    abstract findAttackingMoves(board: Board, actualField: Field): string[];
 }
 
 export default Piece;

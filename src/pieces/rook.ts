@@ -1,13 +1,13 @@
-import Piece from './piece';
-import Board from '../board';
-import Field from '../field';
+import Piece from './Piece';
+import Board from '../Board';
+import Field from '../Field';
 
 class Rook extends Piece {
-  _display: string;
+  display: string;
 
   constructor(side: string) {
     super(side);
-    this._display = `<i class="fas fa-chess-rook ${side}"></i>`;
+    this.display = `<i class="fas fa-chess-rook ${side}"></i>`;
   }
 
   findLegalMoves(board: Board, actualField: Field): string[] {
