@@ -88,20 +88,6 @@ class Board {
         }
     }
 }
-<<<<<<< HEAD
-//mamy pustą tablice tu trzeba zaimportować figury wedle przykładu dla pionka
-let pawn = new Pawn(6, 0, 'white');
-board[pawn.x][pawn.y] = pawn;
-pawn = new Pawn(6, 1, 'white');
-board[pawn.x][pawn.y] = pawn;
-let bishop = new Bishop(7, 2, 'white');
-board[bishop.x][bishop.y] = bishop;
-bishop = new Bishop(7, 5, 'white');
-board[bishop.x][bishop.y] = bishop;
-=======
->>>>>>> main
-
-
 
 export default Board;
 
