@@ -10,7 +10,7 @@ export const setup = () => {
         for (let y = 0; y < board.boardSize; y++) {
             const square = document.createElement('div');
             square.id = `${x},${y}`;
-            square.className = 'square'; 
+            square.className = 'square';
             square.className += x % 2 == y % 2 ? ' light' : ' dark';
 
             let field = fields[x][y];
