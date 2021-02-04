@@ -5,8 +5,10 @@ import Field from '../Field';
 abstract class Piece implements BasicPiece {
     abstract display: string;
 
+
     constructor(public side: string) {
         this.side = side;
+
     }
 
     move(oldField: Field, newField: Field): void {
