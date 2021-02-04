@@ -53,7 +53,9 @@ class Pawn extends Piece {
       if (board.fields[x - 1][y - 1] !== undefined) {
         if (!board.fields[x - 1][y - 1].isEmpty() && board.fields[x - 1][y - 1].piece?.side === 'black') {
           attackingMoves.push(`${x - 1},${y - 1}`);
+
           }
+
       }
       if (board.fields[x - 1][y + 1] !== undefined) {
         if (!board.fields[x - 1][y + 1].isEmpty() && board.fields[x - 1][y + 1].piece?.side === 'black') {
@@ -64,7 +66,9 @@ class Pawn extends Piece {
       if (board.fields[x + 1][y - 1] !== undefined) {
         if (!board.fields[x + 1][y - 1].isEmpty() && board.fields[x + 1][y - 1].piece?.side === 'white') {
           attackingMoves.push(`${x + 1},${y - 1}`);
+
           }
+
       }
       if (board.fields[x + 1][y + 1] !== undefined) {
         if (!board.fields[x + 1][y + 1].isEmpty() && board.fields[x + 1][y + 1].piece?.side === 'white') {
