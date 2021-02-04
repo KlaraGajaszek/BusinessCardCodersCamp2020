@@ -1,5 +1,7 @@
 import Board from './board';
 import Field from './field';
+import allAttackingMoves from './allAttackingMoves';
+
 
 const touched = (e: MouseEvent, board: Board) => {
     const target = e.currentTarget;
@@ -32,6 +34,8 @@ const touched = (e: MouseEvent, board: Board) => {
 
                         document.getElementById(`${x},${y}`)?.addEventListener('click', (e) => {
                             touched(e, board);
+    //ja na momencik - USUN MNIE :)
+                            console.log(allAttackingMoves(board));
                         });
                     }
                 }

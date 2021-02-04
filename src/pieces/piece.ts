@@ -23,6 +23,7 @@ abstract class Piece implements BasicPiece {
     }
 
     abstract findLegalMoves(board: Board, actualField: Field): string[];
+    abstract findAttackingMoves(board: Board, actualField: Field): string[];
 }
 
 export default Piece;

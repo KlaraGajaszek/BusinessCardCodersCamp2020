@@ -15,6 +15,12 @@ class Queen extends Piece {
 
         return possibleMoves;
     }
+    
+    findAttackingMoves(board: Board, actualField: Field): string[] {
+        const attackingMoves: string[] = new Array();
+    
+        return attackingMoves;
+      }
 }
 
 export default Queen;

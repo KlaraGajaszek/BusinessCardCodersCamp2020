@@ -27,6 +27,16 @@ class Pawn extends Piece {
           possibleMoves.push(`${x - 1},${y}`);
         }
       }
+      if (board.fields[x - 1][y - 1] !== undefined) {
+        if (!board.fields[x - 1][y - 1].isEmpty() && board.fields[x - 1][y - 1].piece?.side === 'black') {
+          possibleMoves.push(`${x - 1},${y - 1}`);
+          }
+      }
+      if (board.fields[x - 1][y + 1] !== undefined) {
+        if (!board.fields[x - 1][y + 1].isEmpty() && board.fields[x - 1][y + 1].piece?.side === 'black') {
+          possibleMoves.push(`${x - 1},${y + 1}`);
+        }
+      }
     } else {
       // Two forward black
       if (x === 1) {
@@ -38,6 +48,16 @@ class Pawn extends Piece {
       if (x + 1 <= 7) {
         if (board.fields[x + 1][y].isEmpty()) {
           possibleMoves.push(`${x + 1},${y}`);
+        }
+      }
+      if (board.fields[x + 1][y - 1] !== undefined) {
+        if (!board.fields[x + 1][y - 1].isEmpty() && board.fields[x + 1][y - 1].piece?.side === 'white') {
+          possibleMoves.push(`${x + 1},${y - 1}`);
+          }
+      }
+      if (board.fields[x + 1][y + 1] !== undefined) {
+        if (!board.fields[x + 1][y + 1].isEmpty() && board.fields[x + 1][y + 1].piece?.side === 'white') {
+          possibleMoves.push(`${x + 1},${y + 1}`);
         }
       }
     }
