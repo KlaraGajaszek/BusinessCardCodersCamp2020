@@ -1,7 +1,6 @@
 import Board from './board';
 import Field from './field';
 
-
 const touched = (e: MouseEvent, board: Board) => {
     const target = e.currentTarget;
     if (target) {

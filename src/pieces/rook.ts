@@ -3,6 +3,7 @@ import Board from '../board';
 import Field from '../field';
 
 class Rook extends Piece {
+
     _display: string;
 
     constructor(protected side: string) {
@@ -15,6 +16,7 @@ class Rook extends Piece {
 
         return possibleMoves;
     }
+
 }
 
 export default Rook;

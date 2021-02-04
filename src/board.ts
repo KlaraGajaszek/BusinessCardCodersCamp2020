@@ -6,6 +6,7 @@ import Bishop from './pieces/bishop';
 import Queen from './pieces/queen';
 import King from './pieces/king';
 
+
 class Board {
     readonly boardSize: number = 8;
 
@@ -100,4 +101,9 @@ board[bishop.x][bishop.y] = bishop;
 =======
 >>>>>>> main
 
+
+
 export default Board;
+
+
+
