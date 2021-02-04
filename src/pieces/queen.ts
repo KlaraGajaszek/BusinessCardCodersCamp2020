@@ -11,23 +11,11 @@ class Queen extends Piece {
     }
 
     findLegalMoves(board: Board, actualField: Field): string[] {
-        const possibleMoves: string[] = new Array();
         const attacking = this.findAttackingMoves(board, actualField);
-        attacking.forEach(position => {
-            let x = Number(position![0]);
-            let y = Number(position![2]);
-            if (board.fields[x][y].piece === null) {
-                possibleMoves.push(position!);
-            } else {
-                if (board.fields[x][y].piece!.side !== actualField.piece!.side) {
-                    possibleMoves.push(position!);
-                }
-            }
-        })
+        const possibleMoves = attacking.filter(position => board.fields[Number(position[0])][Number(position[2])].piece !== null && board.fields[Number(position[0])][Number(position[2])].piece!.side !== actualField.piece!.side || board.fields[Number(position[0])][Number(position[2])].piece === null);
         return possibleMoves;
-
     }
-    findAttackingMoves(board: Board, actualField: Field): Array<string | null> {
+    findAttackingMoves(board: Board, actualField: Field): Array<string> {
         const attackingMoves: string[] = new Array();
         for (let r = 1; actualField.y + r < 8; r++) {
             if (board.fields[actualField.x][actualField.y + r].piece !== null) {
