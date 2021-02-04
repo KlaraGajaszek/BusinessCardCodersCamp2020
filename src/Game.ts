@@ -7,24 +7,24 @@ class Game {
     constructor() {
         this.board = new Board();
         this.board.initBoard();
-        this.setup()
+        this.setup();
     }
 
     afterMove(field: Field, move: string) {
-        this.movePiece(field, move)
+        this.movePiece(field, move);
 
         // Logika która powinna znajdować sie po ruchu znajduje się tutaj,
         // oczywiście chodzi tutaj o wywołania odpowiednich funkcji tylko :)
-        // czyli np. sprawdzenie czy jest szach, mat, pat, zmiana tury itp. 
+        // czyli np. sprawdzenie czy jest szach, mat, pat, zmiana tury itp.
     }
 
-    setup(){
+    setup() {
         const fields = this.board.fields;
         for (let x = 0; x < this.board.boardSize; x++) {
             for (let y = 0; y < this.board.boardSize; y++) {
                 const square = document.createElement('div');
                 square.id = `${x},${y}`;
-                square.className = 'square'; 
+                square.className = 'square';
                 square.className += x % 2 == y % 2 ? ' light' : ' dark';
 
                 let field = fields[x][y];
@@ -54,7 +54,7 @@ class Game {
             for (let move of possibleMoves) {
                 (document.getElementById(move) as HTMLDivElement).className += ` possibleMove`;
                 (document.getElementById(move) as HTMLDivElement).addEventListener('click', () => {
-                    this.afterMove(field, move)
+                    this.afterMove(field, move);
                 });
             }
         }
@@ -66,9 +66,9 @@ class Game {
         }
         for (let x = 0; x < this.board.boardSize; x++) {
             for (let y = 0; y < this.board.boardSize; y++) {
-                (document.getElementById(`${x},${y}`) as HTMLDivElement).className = (document
-                    .getElementById(`${x},${y}`) as HTMLDivElement)
-                    .className.replace(`possibleMove`, '');
+                (document.getElementById(`${x},${y}`) as HTMLDivElement).className = (document.getElementById(
+                    `${x},${y}`,
+                ) as HTMLDivElement).className.replace(`possibleMove`, '');
 
                 let old_element = document.getElementById(`${x},${y}`) as HTMLDivElement;
                 let new_element = old_element.cloneNode(true);
@@ -80,6 +80,6 @@ class Game {
             }
         }
     }
-};
+}
 
-export default Game
+export default Game;
