@@ -3,6 +3,7 @@ import Board from '../board';
 import Field from '../field';
 
 class King extends Piece {
+
     _display: string;
 
     constructor(protected side: string) {
