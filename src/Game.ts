@@ -18,6 +18,14 @@ class Game {
         // czyli np. sprawdzenie czy jest szach, mat, pat, zmiana tury itp.
     }
 
+    allAttackingMovesBySide(color: string) {
+        return this.getAllPiecesBySide(color).map(field => field?.piece?.findAttackingMoves(this.board, field)).flat()
+    }
+
+    getAllPiecesBySide(color: string): Field[] {
+        return this.board.fields.flat().filter(field => field?.piece && field.piece.side === color)
+    }
+
     setup() {
         const fields = this.board.fields;
         for (let x = 0; x < this.board.boardSize; x++) {
