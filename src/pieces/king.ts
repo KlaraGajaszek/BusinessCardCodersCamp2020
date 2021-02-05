@@ -31,9 +31,22 @@ class King extends Piece {
     }
 
     findAttackingMoves(board: Board, actualField: Field): string[] {
-        const possibleMoves: string[] = new Array();
+        const attackingMoves: Array<string> = new Array();
+        const x = actualField.x;
+        const y = actualField.y;
 
-        return possibleMoves;
+        this.offsets.forEach(offset => {
+            try {
+                let field: Field = board.getField(x + offset.x, y + offset.y);
+                if (field.piece?.side !== this.side) {
+                    attackingMoves.push(`${field.x},${field.y}`);
+                }
+            } catch (exception) {
+
+            }
+        });
+
+        return attackingMoves;
     }
 }
 
