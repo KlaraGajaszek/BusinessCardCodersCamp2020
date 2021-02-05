@@ -3,6 +3,7 @@ import Field from './Field';
 
 class Game {
     board: Board;
+    turn: string = 'white';
 
     constructor() {
         this.board = new Board();
@@ -12,7 +13,7 @@ class Game {
 
     afterMove(field: Field, move: string) {
         this.movePiece(field, move);
-
+        this.changeTurn();
         // Logika która powinna znajdować sie po ruchu znajduje się tutaj,
         // oczywiście chodzi tutaj o wywołania odpowiednich funkcji tylko :)
         // czyli np. sprawdzenie czy jest szach, mat, pat, zmiana tury itp.
@@ -50,12 +51,14 @@ class Game {
             const field: Field = this.board.getField(x, y);
             if (!field?.piece) return;
 
-            const possibleMoves = field.piece.findLegalMoves(this.board, field);
-            for (let move of possibleMoves) {
-                (document.getElementById(move) as HTMLDivElement).className += ` possibleMove`;
-                (document.getElementById(move) as HTMLDivElement).addEventListener('click', () => {
-                    this.afterMove(field, move);
-                });
+            if(this.turn === field.piece.side) {
+                const possibleMoves = field.piece.findLegalMoves(this.board, field);
+                for (let move of possibleMoves) {
+                    (document.getElementById(move) as HTMLDivElement).className += ` possibleMove`;
+                    (document.getElementById(move) as HTMLDivElement).addEventListener('click', () => {
+                        this.afterMove(field, move);
+                    });
+                }
             }
         }
     }
@@ -79,6 +82,10 @@ class Game {
                 });
             }
         }
+    }
+
+    changeTurn(): void {
+        this.turn === 'white' ? (this.turn = 'black') : (this.turn = 'white');
     }
 }
 
