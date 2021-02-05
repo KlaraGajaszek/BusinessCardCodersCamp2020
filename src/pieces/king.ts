@@ -3,12 +3,12 @@ import Board from '../board';
 import Field from '../field';
 
 class King extends Piece {
-    _display: string;
+    display: string;
     offsets: { x: number, y: number }[] = [{ x: 1, y: 0 }, { x: 0, y: 1 }, { x: -1, y: 0 }, { x: 0, y: -1 }, { x: 1, y: 1 }, { x: -1, y: 1 }, { x: -1, y: -1 }, { x: 1, y: -1 }];
 
     constructor(public side: string) {
         super(side);
-        this._display = `<i class="fas fa-chess-king ${side}"></i>`;
+        this.display = `<i class="fas fa-chess-king ${side}"></i>`;
     }
 
     findLegalMoves(board: Board, actualField: Field): string[] {
@@ -17,14 +17,22 @@ class King extends Piece {
         const y = actualField.y;
 
         this.offsets.forEach(offset => {
-            let field: Field | null = board.getField(x + offset.x, y + offset.y);
-            if (field !== null) {
+            try {
+                let field: Field = board.getField(x + offset.x, y + offset.y);
                 if (field.isEmpty() || field.piece?.side !== this.side) {
                     possibleMoves.push(`${field.x},${field.y}`);
                 }
+            } catch (exception) {
+
             }
         });
-        console.log(possibleMoves);
+
+        return possibleMoves;
+    }
+
+    findAttackingMoves(board: Board, actualField: Field): string[] {
+        const possibleMoves: string[] = new Array();
+
         return possibleMoves;
     }
 }

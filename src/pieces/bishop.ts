@@ -1,20 +1,26 @@
-import Piece from './piece';
-import Board from '../board';
-import Field from '../field';
+import Piece from './Piece';
+import Board from '../Board';
+import Field from '../Field';
 
 class Bishop extends Piece {
-  _display: string;
+    display: string;
 
-  constructor(protected side: string) {
-    super(side);
-    this._display = `<i class="fas fa-chess-bishop ${side}"></i>`;
-  }
+    constructor(side: string) {
+        super(side);
+        this.display = `<i class="fas fa-chess-bishop ${side}"></i>`;
+    }
 
-  findLegalMoves(board: Board, actualField: Field): string[] {
-    const possibleMoves: string[] = new Array();
+    findLegalMoves(board: Board, actualField: Field): string[] {
+        const possibleMoves: string[] = new Array();
 
-    return possibleMoves;
-  }
+        return possibleMoves;
+    }
+
+    findAttackingMoves(board: Board, actualField: Field): string[] {
+        const possibleMoves: string[] = new Array();
+
+        return possibleMoves;
+    }
 }
 
 export default Bishop;

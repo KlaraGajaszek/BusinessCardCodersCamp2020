@@ -1,7 +1,7 @@
-import { setup } from './setup';
+import Game from './Game';
 
-//checkWinner();
+const App = () => {
+    new Game();
+};
 
-//changePlayer(); to wszystko na później
-
-window.onload = setup;
+window.onload = App;
