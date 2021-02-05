@@ -1,4 +1,4 @@
-import Piece from './pieces/Piece';
+import Piece from './pieces/piece';
 
 class Field {
     piece: Piece | null;
