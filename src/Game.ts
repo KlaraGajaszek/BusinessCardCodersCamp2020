@@ -1,5 +1,6 @@
 import Board from './board';
 import Field from './field';
+import Pawn from './pieces/pawn';
 
 class Game {
     board: Board;
@@ -13,6 +14,14 @@ class Game {
     }
 
     afterMove(field: Field, move: string) {
+        for (let x = 0; x < this.board.boardSize; x++) {
+            for (let y = 0; y < this.board.boardSize; y++) {
+                if (this.board.fields[x][y].piece instanceof Pawn && (this.board.fields[x][y].piece as Pawn).isEnPassantPossible) {
+                    (this.board.fields[x][y].piece as Pawn).isEnPassantPossible = false;   
+                }
+            }
+        }
+
         this.movePiece(field, move);
         this.changeTurn();
         // Logika która powinna znajdować sie po ruchu znajduje się tutaj,
@@ -74,7 +83,7 @@ class Game {
 
     movePiece(field: Field, move: string) {
         if (field.piece) {
-            field.piece.move(field, this.board.getField(parseInt(move[0]), parseInt(move[2])));
+            field.piece.move(field, this.board.getField(parseInt(move[0]), parseInt(move[2])), this.board);
         }
         for (let x = 0; x < this.board.boardSize; x++) {
             for (let y = 0; y < this.board.boardSize; y++) {
