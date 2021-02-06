@@ -1,9 +1,11 @@
 html {
   margin: 0;
 }
+
 * {
   box-sizing: border-box;
 }
+
 #wrapper {
   display: flex;
   justify-content: center;
@@ -18,6 +20,7 @@ html {
   width: 80vh;
   height: 80vh;
 }
+
 .square {
   width: 10vh;
   height: 10vh;
@@ -25,18 +28,23 @@ html {
   line-height: 10vh;
   font-size: 7.5vh;
 }
+
 .light {
   background: rgb(133, 212, 243);
 }
+
 .dark {
-  background:rgb(46, 46, 82);
+  background: rgb(46, 46, 82);
 }
+
 .black {
   color: black;
 }
+
 .white {
   color: silver;
 }
+
 .possibleMove {
   background: rgba(222, 247, 2, 0.6);
 }
@@ -49,14 +57,17 @@ html {
   outline: 1px gray solid;
   transform: translate(10px, 2px);
 }
+
 .promoChoiceItem:hover {
   color: white;
 }
+
 .promoChoiceList {
   margin: 0 0;
   list-style: none;
   padding-left: 0;
 }
+
 /* ================================== */
 
 .checkmate-box-wrapper {
@@ -84,12 +95,31 @@ html {
   font-size: 25px;
 }
 
-.checkmate-box > p:first-letter {
+.checkmate-box>p:first-letter {
   text-transform: capitalize;
 }
 
-.checkmate-box > p:first-of-type {
+.checkmate-box>p:first-of-type {
   font-size: 1.5em;
   border: 0;
   margin: 0;
+}
+
+.whiteClock {
+  width: 30%;
+  height: 30%;
+  background-color: blue;
+}
+
+.blackClock {
+  width: 30%;
+  height: 30%;
+  background-color: #e9145b;
+}
+
+.timer {
+  width: 100%;
+  height: 100%;
+  padding: 5%;
+  font-size: 30px;
 }

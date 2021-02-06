@@ -1,17 +1,30 @@
 import Board from './Board';
+import Clock from './clock';
 import Field from './Field';
 
 class Game {
     board: Board;
+    whiteClock: Clock;
+    blackClock: Clock;
+    turn: string = 'black';
+
 
     constructor() {
         this.board = new Board();
         this.board.initBoard();
         this.setup();
+        this.whiteClock = new Clock('white', 15, 0, 'whiteClock', this.turn);
+        this.whiteClock.render();
+        this.blackClock = new Clock('black', 15, 0, 'blackClock', this.turn);
+        this.blackClock.render();
     }
 
     afterMove(field: Field, move: string) {
         this.movePiece(field, move);
+        this.changeTurn();
+        this.changeClock();
+
+
 
         // Logika która powinna znajdować sie po ruchu znajduje się tutaj,
         // oczywiście chodzi tutaj o wywołania odpowiednich funkcji tylko :)
@@ -88,6 +101,19 @@ class Game {
             }
         }
     }
+    changeTurn(): void {
+        this.turn === 'white' ? (this.turn = 'black') : (this.turn = 'white');
+    }
+    changeClock(): void {
+        if (this.turn === 'black') {
+            this.whiteClock.startClock();
+            this.blackClock.stopClock();
+        } else if (this.turn === 'white') {
+            this.blackClock.startClock();
+            this.whiteClock.stopClock();
+        }
+    }
+
 }
 
 export default Game;
