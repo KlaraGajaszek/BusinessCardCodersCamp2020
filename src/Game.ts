@@ -3,15 +3,18 @@ import Field from './Field';
 
 class Game {
     board: Board;
+    turn: string;
 
     constructor() {
         this.board = new Board();
         this.board.initBoard();
         this.setup();
+        this.turn = 'white';
     }
 
     afterMove(field: Field, move: string) {
         this.movePiece(field, move);
+        this.changeTurn();
         this.isCheck();
         // Logika która powinna znajdować sie po ruchu znajduje się tutaj,
         // oczywiście chodzi tutaj o wywołania odpowiednich funkcji tylko :)
@@ -58,12 +61,14 @@ class Game {
             const field: Field = this.board.getField(x, y);
             if (!field?.piece) return;
 
-            const possibleMoves = field.piece.findLegalMoves(this.board, field);
-            for (let move of possibleMoves) {
-                (document.getElementById(move) as HTMLDivElement).className += ` possibleMove`;
-                (document.getElementById(move) as HTMLDivElement).addEventListener('click', () => {
-                    this.afterMove(field, move);
-                });
+            if(this.turn === field.piece.side) {
+                const possibleMoves = field.piece.findLegalMoves(this.board, field);
+                for (let move of possibleMoves) {
+                    (document.getElementById(move) as HTMLDivElement).className += ` possibleMove`;
+                    (document.getElementById(move) as HTMLDivElement).addEventListener('click', () => {
+                        this.afterMove(field, move);
+                    });
+                }
             }
         }
     }
@@ -89,6 +94,9 @@ class Game {
         }
     }
 
+    changeTurn(): void {
+        this.turn = this.turn === 'white' ? 'black' : 'white';
+    }
     getKingPosition(pieceside: string): string {
         const kingPosition = this.board.fields.flat().filter(
             field => field.piece?.display === `<i class="fas fa-chess-king ${pieceside}"></i>`
