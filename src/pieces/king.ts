@@ -1,6 +1,7 @@
 import Piece from './piece';
 import Board from '../board';
 import Field from '../field';
+import { game } from '../main';
 
 class King extends Piece {
     display: string;
@@ -12,14 +13,20 @@ class King extends Piece {
     }
 
     findLegalMoves(board: Board, actualField: Field): string[] {
-        const possibleMoves: Array<string> = new Array();
+        const possibleMoves: string[] = new Array();
         const x = actualField.x;
         const y = actualField.y;
+        let attackingMoves: (string | undefined)[];
+        if (this.side === 'white') {
+            attackingMoves = game.allAttackingMovesBySide('black');
+        } else {
+            attackingMoves = game.allAttackingMovesBySide('white');
+        }
 
         this.offsets.forEach(offset => {
             try {
                 let field: Field = board.getField(x + offset.x, y + offset.y);
-                if (field.isEmpty() || field.piece?.side !== this.side) {
+                if ((field.isEmpty() || field.piece?.side !== this.side) && !this.isInEnemyAttackingMoves(attackingMoves, field)) {
                     possibleMoves.push(`${field.x},${field.y}`);
                 }
             } catch (exception) {
@@ -31,22 +38,30 @@ class King extends Piece {
     }
 
     findAttackingMoves(board: Board, actualField: Field): string[] {
-        const attackingMoves: Array<string> = new Array();
+        const attackingMoves: string[] = new Array();
         const x = actualField.x;
         const y = actualField.y;
 
         this.offsets.forEach(offset => {
             try {
                 let field: Field = board.getField(x + offset.x, y + offset.y);
-                if (field.piece?.side !== this.side) {
-                    attackingMoves.push(`${field.x},${field.y}`);
-                }
+                attackingMoves.push(`${field.x},${field.y}`);
             } catch (exception) {
 
             }
         });
 
         return attackingMoves;
+    }
+
+    private isInEnemyAttackingMoves(attackingMoves: (string | undefined)[], field: Field): boolean {
+        let result = false;
+        attackingMoves.forEach(move => {
+            if (move !== undefined && Number(move[0]) === field.x && Number(move[2]) === field.y) {
+                result = true;
+            }
+        });
+        return result;
     }
 }
 

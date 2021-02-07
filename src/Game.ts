@@ -60,7 +60,7 @@ class Game {
             const field: Field = this.board.getField(x, y);
             if (!field?.piece) return;
 
-            if(this.turn === field.piece.side) {
+            if (this.turn === field.piece.side) {
                 const possibleMoves = field.piece.findLegalMoves(this.board, field);
                 for (let move of possibleMoves) {
                     (document.getElementById(move) as HTMLDivElement).className += ` possibleMove`;
