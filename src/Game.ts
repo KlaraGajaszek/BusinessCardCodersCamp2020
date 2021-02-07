@@ -14,6 +14,15 @@ class Game {
     }
 
     afterMove(field: Field, move: string) {
+        this.updateEnpassantStatus();
+        this.movePiece(field, move);
+        this.changeTurn();
+        // Logika która powinna znajdować sie po ruchu znajduje się tutaj,
+        // oczywiście chodzi tutaj o wywołania odpowiednich funkcji tylko :)
+        // czyli np. sprawdzenie czy jest szach, mat, pat, zmiana tury itp.
+    }
+
+    updateEnpassantStatus(){
         for (let x = 0; x < this.board.boardSize; x++) {
             for (let y = 0; y < this.board.boardSize; y++) {
                 if (this.board.fields[x][y].piece instanceof Pawn && (this.board.fields[x][y].piece as Pawn).isEnPassantPossible) {
@@ -21,12 +30,6 @@ class Game {
                 }
             }
         }
-
-        this.movePiece(field, move);
-        this.changeTurn();
-        // Logika która powinna znajdować sie po ruchu znajduje się tutaj,
-        // oczywiście chodzi tutaj o wywołania odpowiednich funkcji tylko :)
-        // czyli np. sprawdzenie czy jest szach, mat, pat, zmiana tury itp.
     }
 
     allAttackingMovesBySide(color: string) {
