@@ -104,6 +104,7 @@ class Pawn extends Piece {
         const x = oldField.x;
         const y = newField.y;
         board.fields[x][y].piece = null;
+        (document.getElementById(`${x},${y}`) as HTMLDivElement).innerHTML = '';
       }
     }
 }
