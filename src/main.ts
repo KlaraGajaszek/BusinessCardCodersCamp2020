@@ -1,7 +1,9 @@
 import Game from './Game';
 
+export let game: Game;
+
 const App = () => {
-    new Game();
+    game = new Game();
 };
 
 window.onload = App;

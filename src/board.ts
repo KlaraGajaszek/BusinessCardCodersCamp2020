@@ -1,10 +1,10 @@
-import Field from './Field';
-import Pawn from './pieces/Pawn';
-import Rook from './pieces/Rook';
-import Knight from './pieces/Knight';
-import Bishop from './pieces/Bishop';
-import Queen from './pieces/Queen';
-import King from './pieces/King';
+import Field from './field';
+import Pawn from './pieces/pawn';
+import Rook from './pieces/rook';
+import Knight from './pieces/knight';
+import Bishop from './pieces/bishop';
+import Queen from './pieces/queen';
+import King from './pieces/king';
 
 class Board {
     readonly boardSize: number = 8;
@@ -20,7 +20,7 @@ class Board {
 
     getField(x: number, y: number): Field {
         if (x < 0 || x > 7 || y < 0 || y > 7) {
-            throw new Error('Index out of bound');
+            throw new Error('Index out of bounds');
         }
         return this.fields[x][y];
     }

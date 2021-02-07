@@ -1,6 +1,6 @@
 import { BasicPiece } from '../types';
-import Board from '../Board';
-import Field from '../Field';
+import Board from '../board';
+import Field from '../field';
 
 abstract class Piece implements BasicPiece {
     abstract display: string;
