@@ -90,48 +90,31 @@ class Game {
     }
 
     getKingPosition(pieceside: string): string {
-        let kingPosition = ''
-        for(const fields of this.board.fields) {
-            for(const pieces of fields) {
-                if(pieces.piece?.display === `<i class="fas fa-chess-king ${pieceside}"></i>`) {
-                    kingPosition = `${pieces.x},${pieces.y}`
-                }
-            }
-        }
-        return kingPosition;
+        const kingPosition = this.board.fields.flat().filter(
+            field => field.piece?.display === `<i class="fas fa-chess-king ${pieceside}"></i>`
+        );
+        return `${kingPosition[0].x},${kingPosition[0].y}`;
 
-        // for(let i = 0; i < this.board.fields.length; i++) {
-        //     for (let k = 0; i < this.board.fields.length; k++) {
-        //         console.log(this.board.getField[i][k])
+        // let kingPosition = ''
+        // for(const fields of this.board.fields) {
+        //     for(const pieces of fields) {
+        //         if(pieces.piece?.display === `<i class="fas fa-chess-king ${pieceside}"></i>`) {
+        //             kingPosition = `${pieces.x},${pieces.y}`
+        //         }
         //     }
         // }
-
-        
-        // const kingPosition = this.board.fields.flat().filter(
-        //     field => field.piece?.display === `<i class="fas fa-chess-king ${pieceside}"></i>`
-        // );
-        // return `${kingPosition[0].x},${kingPosition[0].y}`;
+        // return kingPosition;
     }
 
-    isCheck(): any {
-        const whiteKing = this.getKingPosition('white');
-        const blackKing = this.getKingPosition('black');
-        console.log(this.allAttackingMovesBySide('white'));
-        // console.log(this.allAttackingMovesBySide('black'));
-        // console.log(blackKing);
-        // console.log(whiteKing);
-        // if(this.allAttackingMovesBySide('white').includes(blackKing)) {
-        //     console.log('szach')
-        // }
-        // if(this.allAttackingMovesBySide('black').includes(whiteKing)) {
-        //     console.log('szach2');
-        // }
-        // if(this.allAttackingMovesBySide('white').includes(this.getKingPosition('black')) || this.allAttackingMovesBySide('black').indexOf(this.getKingPosition('white')) !== -1) {
-        //     console.log('SZACH')
-        // }
-        // return;
-        // return this.allAttackingMovesBySide(pieceside).includes(this.getKingPosition(pieceside));
-     }
+    isCheck() {
+        const whiteKing: string = this.getKingPosition('white');
+        const blackKing: string = this.getKingPosition('black');
+
+        if(this.allAttackingMovesBySide('black').includes(whiteKing) || this.allAttackingMovesBySide('white').includes(blackKing)) {
+            console.log('SZACH')
+        }
+        // return this.allAttackingMovesBySide(pieceside).includes(this.getKingPosition(counterSide));
+    }
 }
 
 export default Game;
