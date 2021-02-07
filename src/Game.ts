@@ -3,12 +3,13 @@ import Field from './Field';
 
 class Game {
     board: Board;
-    turn: string = 'white';
+    turn: string;
 
     constructor() {
         this.board = new Board();
         this.board.initBoard();
         this.setup();
+        this.turn = 'white';
     }
 
     afterMove(field: Field, move: string) {
@@ -85,7 +86,7 @@ class Game {
     }
 
     changeTurn(): void {
-        this.turn === 'white' ? (this.turn = 'black') : (this.turn = 'white');
+        this.turn = this.turn === 'white' ? 'black' : 'white';
     }
 }
 
