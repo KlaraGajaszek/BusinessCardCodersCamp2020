@@ -6,17 +6,18 @@ class Game {
     board: Board;
     whiteClock: Clock;
     blackClock: Clock;
-    turn: string = 'black';
+    turn: string;
 
 
     constructor() {
+        this.turn = "white";
         this.board = new Board();
         this.board.initBoard();
         this.setup();
-        this.whiteClock = new Clock('white', 15, 0, 'whiteClock', this.turn);
-        this.whiteClock.render();
-        this.blackClock = new Clock('black', 15, 0, 'blackClock', this.turn);
+        this.blackClock = new Clock('black', 15, 0, 'blackClock');
         this.blackClock.render();
+        this.whiteClock = new Clock('white', 15, 0, 'whiteClock');
+        this.whiteClock.render();
     }
 
     afterMove(field: Field, move: string) {
@@ -102,13 +103,13 @@ class Game {
         }
     }
     changeTurn(): void {
-        this.turn === 'white' ? (this.turn = 'black') : (this.turn = 'white');
+        this.turn = this.turn === 'white' ? 'black' : 'white';
     }
     changeClock(): void {
-        if (this.turn === 'black') {
+        if (this.turn === 'white') {
             this.whiteClock.startClock();
             this.blackClock.stopClock();
-        } else if (this.turn === 'white') {
+        } else if (this.turn === 'black') {
             this.blackClock.startClock();
             this.whiteClock.stopClock();
         }

@@ -5,9 +5,9 @@ import Field from '../Field';
 class Bishop extends Piece {
   display: string;
 
-  constructor(side: string) {
+  constructor(side: string,) {
     super(side);
-    this._display = `<i class="fas fa-chess-bishop ${side}"></i>`;
+    this.display = `<i class="fas fa-chess-bishop ${side}"></i>`;
   }
 
   findAttackingMoves(board: Board, actualField: Field): string[] {

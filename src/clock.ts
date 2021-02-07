@@ -1,22 +1,20 @@
 class Clock {
-  public side: string;
-  public seconds: number;
-  public minutes: number
-  public turn: string;
-  public styleName: string;
-  public run: any;
+  side: string;
+  seconds: number;
+  minutes: number;
+  styleName: string;
+  interval: any;
 
-  constructor(side: string, minutes: number, seconds: number, styleName: string, turn: string) {
+  constructor(side: string, minutes: number, seconds: number, styleName: string) {
     this.side = side,
       this.minutes = minutes,
       this.seconds = seconds,
-      this.render
-    this.styleName = styleName,
-      this.turn = turn
+      this.render,
+      this.styleName = styleName
   }
 
   public clockRender() {
-    const container = document.getElementById('wrapper');
+    const container = document.getElementById('clock-wrapper');
     const clock = document.createElement('div');
     clock.setAttribute('class', this.styleName);
     container?.appendChild(clock);
@@ -42,10 +40,21 @@ class Clock {
     if (timer !== null) timer.textContent = `${min}:${sec}`;
   };
   public startClock() {
-    this.run = setInterval(this.countDown.bind(this), 1000)
+    this.interval = setInterval(this.countDown.bind(this), 1000);
+    const propeller = document.querySelector(`.${this.styleName} .clockFace`)! as HTMLDivElement;
+    if (propeller !== null) {
+      propeller.style.filter = 'none';
+      propeller.style.animation = 'rotate 2s infinite linear';
+    }
   }
+
   public stopClock() {
-    clearInterval(this.run);
+    clearInterval(this.interval);
+    const propeller = document.querySelector(`.${this.styleName} .clockFace`)! as HTMLDivElement;
+    if (propeller !== null) {
+      propeller.style.filter = "grayscale()";
+      propeller.style.animation = 'rotate 2s paused linear'
+    }
   }
 
   public render() {
