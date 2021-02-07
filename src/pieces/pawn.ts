@@ -1,6 +1,6 @@
-import Piece from './Piece';
-import Board from '../Board';
-import Field from '../Field';
+import Piece from './piece';
+import Board from '../board';
+import Field from '../field';
 
 class Pawn extends Piece {
     display: string;
@@ -49,7 +49,7 @@ class Pawn extends Piece {
         const x = actualField.x;
         const y = actualField.y;
 
-        if ((this.side = 'white')) {
+        if ((this.side === 'white')) {
             if (board.fields[x - 1][y - 1] !== undefined) {
                 if (!board.fields[x - 1][y - 1].isEmpty() && board.fields[x - 1][y - 1].piece?.side === 'black') {
                     attackingMoves.push(`${x - 1},${y - 1}`);

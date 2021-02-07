@@ -1,5 +1,5 @@
-import Board from './Board';
-import Field from './Field';
+import Board from './board';
+import Field from './field';
 
 export interface BasicPiece {
     move(oldField: Field, newField: Field): void;
