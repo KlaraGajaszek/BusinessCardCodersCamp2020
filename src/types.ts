@@ -6,3 +6,7 @@ export interface BasicPiece {
     findLegalMoves(board: Board, actualField: Field): string[];
     findAttackingMoves(board: Board, actualField: Field): string[];
 }
+
+export enum xCoords {
+    a, b, c, d, e, f, g, h
+}
