@@ -14,8 +14,8 @@ class Game {
 
     afterMove(field: Field, move: string) {
         this.movePiece(field, move);
+        this.isCheck(this.turn);
         this.changeTurn();
-        this.isCheck();
         // Logika która powinna znajdować sie po ruchu znajduje się tutaj,
         // oczywiście chodzi tutaj o wywołania odpowiednich funkcji tylko :)
         // czyli np. sprawdzenie czy jest szach, mat, pat, zmiana tury itp.
@@ -97,31 +97,19 @@ class Game {
     changeTurn(): void {
         this.turn = this.turn === 'white' ? 'black' : 'white';
     }
+
     getKingPosition(pieceside: string): string {
         const kingPosition = this.board.fields.flat().filter(
             field => field.piece?.display === `<i class="fas fa-chess-king ${pieceside}"></i>`
         );
         return `${kingPosition[0].x},${kingPosition[0].y}`;
-
-        // let kingPosition = ''
-        // for(const fields of this.board.fields) {
-        //     for(const pieces of fields) {
-        //         if(pieces.piece?.display === `<i class="fas fa-chess-king ${pieceside}"></i>`) {
-        //             kingPosition = `${pieces.x},${pieces.y}`
-        //         }
-        //     }
-        // }
-        // return kingPosition;
     }
 
-    isCheck() {
-        const whiteKing: string = this.getKingPosition('white');
-        const blackKing: string = this.getKingPosition('black');
-
-        if(this.allAttackingMovesBySide('black').includes(whiteKing) || this.allAttackingMovesBySide('white').includes(blackKing)) {
-            console.log('SZACH')
-        }
-        // return this.allAttackingMovesBySide(pieceside).includes(this.getKingPosition(counterSide));
+    isCheck(side: string) {
+        const counterSide = side === 'white' ? 'black' : 'white';
+        const kingPosition = this.getKingPosition(counterSide); 
+        
+        return this.allAttackingMovesBySide(side).includes(kingPosition);
     }
 }
 
