@@ -22,7 +22,7 @@ class Game {
         // czyli np. sprawdzenie czy jest szach, mat, pat, zmiana tury itp.
     }
 
-    updateEnpassantStatus(){
+    updateEnpassantStatus() {
         for (let x = 0; x < this.board.boardSize; x++) {
             for (let y = 0; y < this.board.boardSize; y++) {
                 if (this.board.fields[x][y].piece instanceof Pawn && (this.board.fields[x][y].piece as Pawn).isEnPassantPossible) {
