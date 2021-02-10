@@ -16,6 +16,7 @@ class Game {
     afterMove(field: Field, move: string) {
         this.updateEnpassantStatus();
         this.movePiece(field, move);
+        this.isCheck();
         this.changeTurn();
         // Logika która powinna znajdować sie po ruchu znajduje się tutaj,
         // oczywiście chodzi tutaj o wywołania odpowiednich funkcji tylko :)
@@ -107,6 +108,20 @@ class Game {
 
     changeTurn(): void {
         this.turn = this.turn === 'white' ? 'black' : 'white';
+    }
+
+    getKingPosition(pieceside: string): string {
+        const kingPosition = this.board.fields.flat().filter(
+            field => field.piece?.display === `<i class="fas fa-chess-king ${pieceside}"></i>`
+        );
+        return `${kingPosition[0].x},${kingPosition[0].y}`;
+    }
+
+    isCheck() {
+        const counterSide = this.turn === 'white' ? 'black' : 'white';
+        const kingPosition = this.getKingPosition(counterSide); 
+
+        return this.allAttackingMovesBySide(this.turn).includes(kingPosition);
     }
 }
 
