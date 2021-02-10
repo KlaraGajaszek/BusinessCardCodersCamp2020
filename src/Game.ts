@@ -1,5 +1,7 @@
 import Board from './board';
 import Field from './field';
+import Queen from './pieces/queen';
+import Pawn from './pieces/pawn';
 
 class Game {
     board: Board;
@@ -11,15 +13,34 @@ class Game {
         this.setup();
         this.turn = 'white';
     }
-
+    
     afterMove(field: Field, move: string) {
-        this.movePiece(field, move);
+        const newField = this.board.getField(parseInt(move[0]), parseInt(move[2]));
+        this.movePiece(field, newField);
         this.changeTurn();
+        this.promotePawn(newField);
         // Logika która powinna znajdować sie po ruchu znajduje się tutaj,
         // oczywiście chodzi tutaj o wywołania odpowiednich funkcji tylko :)
         // czyli np. sprawdzenie czy jest szach, mat, pat, zmiana tury itp.
     }
 
+    promotePawn(newField: Field): void {
+        for (let y = 0; y < this.board.boardSize; y++) {
+                if (this.board.fields[0][y].piece instanceof Pawn && this.board.fields[0][y].piece?.side !== null && this.board.fields[0][y].piece?.side === 'white') {
+                    this.board.fields[0][y].piece = new Queen('white');
+                    this.board.fields[0][y].piece?.render(newField);
+                }
+                
+            }
+
+        for ( let y = 0; y < this.board.boardSize; y++){
+            if (this.board.fields[7][y].piece instanceof Pawn && this.board.fields[7][y].piece?.side !== null && this.board.fields[7][y].piece?.side === 'black') {
+                this.board.fields[7][y].piece = new Queen('black');
+                this.board.fields[7][y].piece?.render(newField); 
+            }
+        }
+    }
+    
     allAttackingMovesBySide(color: string) {
         return this.getAllPiecesBySide(color).map(field => field?.piece?.findAttackingMoves(this.board, field)).flat()
     }
@@ -72,9 +93,9 @@ class Game {
         }
     }
 
-    movePiece(field: Field, move: string) {
+    movePiece(field: Field, newField: Field) {
         if (field.piece) {
-            field.piece.move(field, this.board.getField(parseInt(move[0]), parseInt(move[2])));
+            field.piece.move(field, newField);
         }
         for (let x = 0; x < this.board.boardSize; x++) {
             for (let y = 0; y < this.board.boardSize; y++) {
