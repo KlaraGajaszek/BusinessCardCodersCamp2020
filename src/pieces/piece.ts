@@ -9,7 +9,7 @@ abstract class Piece implements BasicPiece {
         this.side = side;
     }
 
-    move(oldField: Field, newField: Field): void {
+    move(oldField: Field, newField: Field, board: Board): void {
         oldField.piece = null;
         (document.getElementById(`${oldField.x},${oldField.y}`) as HTMLDivElement).innerHTML = '';
 
