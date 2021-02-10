@@ -17,7 +17,7 @@ class Field {
     }
 
     getFieldNotation() {
-        return `${xCoords[this.y]}${Math.abs(this.x - 8)}`;
+        return this.piece ? `${this.piece.constructor.name[0]}${xCoords[this.y]}${Math.abs(this.x - 8)}` : `${xCoords[this.y]}${Math.abs(this.x - 8)}`;
     }
 }
 
