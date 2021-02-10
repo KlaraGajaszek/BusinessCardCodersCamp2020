@@ -14,7 +14,7 @@ class Game {
 
     afterMove(field: Field, move: string) {
         this.movePiece(field, move);
-        this.isCheck(this.turn);
+        this.isCheck();
         this.changeTurn();
         // Logika która powinna znajdować sie po ruchu znajduje się tutaj,
         // oczywiście chodzi tutaj o wywołania odpowiednich funkcji tylko :)
@@ -105,11 +105,11 @@ class Game {
         return `${kingPosition[0].x},${kingPosition[0].y}`;
     }
 
-    isCheck(side: string) {
-        const counterSide = side === 'white' ? 'black' : 'white';
+    isCheck() {
+        const counterSide = this.turn === 'white' ? 'black' : 'white';
         const kingPosition = this.getKingPosition(counterSide); 
-        
-        return this.allAttackingMovesBySide(side).includes(kingPosition);
+
+        return this.allAttackingMovesBySide(this.turn).includes(kingPosition);
     }
 }
 
