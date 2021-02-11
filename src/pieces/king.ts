@@ -80,7 +80,6 @@ class King extends Piece {
             if (this.isLongCastlingPossible(board, actualField)) possibleMoves.push(`${actualField.x},2`);
             if (this.isShortCastlingPossible(board, actualField)) possibleMoves.push(`${actualField.x},6`);
         }
-
         return possibleMoves;
     }
 
@@ -109,6 +108,24 @@ class King extends Piece {
             }
         });
         return result;
+    }
+
+    move(oldField: Field, newField: Field, board: Board): void {
+        super.move(oldField, newField, board);
+
+        if (newField.y - oldField.y === 2) {
+            let rookCastling = board.getField(oldField.x, 7).piece;
+            board.getField(oldField.x, 7).piece = null;
+            (document.getElementById(`${oldField.x},7`) as HTMLDivElement).innerHTML = '';
+            board.getField(oldField.x, 3).piece = rookCastling;
+            (document.getElementById(`${oldField.x},5`) as HTMLDivElement).innerHTML = `<i class="fas fa-chess-rook ${this.side}"></i>`;
+        } else if (newField.y - oldField.y === -2) {
+            let rookCastling = board.getField(oldField.x, 0).piece;
+            board.getField(oldField.x, 0).piece = null;
+            (document.getElementById(`${oldField.x},0`) as HTMLDivElement).innerHTML = '';
+            board.getField(oldField.x, 3).piece = rookCastling;
+            (document.getElementById(`${oldField.x},3`) as HTMLDivElement).innerHTML = `<i class="fas fa-chess-rook ${this.side}"></i>`;
+        }
     }
 }
 
