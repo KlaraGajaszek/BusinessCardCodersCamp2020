@@ -12,6 +12,24 @@ class King extends Piece {
         this.display = `<i class="fas fa-chess-king ${side}"></i>`;
     }
 
+    isShortCastlingPossible(board: Board, actualField: Field): boolean {
+        let x = actualField.x;
+        return (
+            !this.isFieldAttackedWhileCastling(actualField, 4, 6) && !board.getField(x, 7).isEmpty() &&
+            board.getField(x, 6).isEmpty() && board.getField(x, 5).isEmpty() &&
+            !board.getField(x, 7).piece?.hasPieceMoved
+        );
+    }
+
+    isLongCastlingPossible(board: Board, actualField: Field): boolean {
+        let x = actualField.x;
+        return (
+            !this.isFieldAttackedWhileCastling(actualField, 2, 4) && !board.getField(x, 0).isEmpty() &&
+            board.getField(x, 1).isEmpty() && board.getField(x, 2).isEmpty() &&
+            board.getField(x, 3).isEmpty() && !board.getField(x, 0).piece?.hasPieceMoved
+        );
+    }
+
     findLegalMoves(board: Board, actualField: Field): string[] {
         const possibleMoves: string[] = new Array();
         const x = actualField.x;
