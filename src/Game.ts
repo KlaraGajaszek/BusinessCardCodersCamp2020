@@ -1,13 +1,13 @@
 import Board from './Board';
 import Clock from './clock';
 import Field from './Field';
+import Pawn from './pieces/pawn';
 
 class Game {
     board: Board;
     whiteClock: Clock;
     blackClock: Clock;
     turn: string;
-
 
     constructor() {
         this.turn = "white";
@@ -21,15 +21,25 @@ class Game {
     }
 
     afterMove(field: Field, move: string) {
+        this.updateEnpassantStatus();
         this.movePiece(field, move);
+        this.isCheck();
         this.changeTurn();
         this.changeClock();
-
-
 
         // Logika która powinna znajdować sie po ruchu znajduje się tutaj,
         // oczywiście chodzi tutaj o wywołania odpowiednich funkcji tylko :)
         // czyli np. sprawdzenie czy jest szach, mat, pat, zmiana tury itp.
+    }
+
+    updateEnpassantStatus() {
+        for (let x = 0; x < this.board.boardSize; x++) {
+            for (let y = 0; y < this.board.boardSize; y++) {
+                if (this.board.fields[x][y].piece instanceof Pawn && (this.board.fields[x][y].piece as Pawn).isEnPassantPossible) {
+                    (this.board.fields[x][y].piece as Pawn).isEnPassantPossible = false;   
+                }
+            }
+        }
     }
 
     allAttackingMovesBySide(color: string) {
@@ -72,19 +82,21 @@ class Game {
             const field: Field = this.board.getField(x, y);
             if (!field?.piece) return;
 
-            const possibleMoves = field.piece.findLegalMoves(this.board, field);
-            for (let move of possibleMoves) {
-                (document.getElementById(move) as HTMLDivElement).className += ` possibleMove`;
-                (document.getElementById(move) as HTMLDivElement).addEventListener('click', () => {
-                    this.afterMove(field, move);
-                });
+            if (this.turn === field.piece.side) {
+                const possibleMoves = field.piece.findLegalMoves(this.board, field);
+                for (let move of possibleMoves) {
+                    (document.getElementById(move) as HTMLDivElement).className += ` possibleMove`;
+                    (document.getElementById(move) as HTMLDivElement).addEventListener('click', () => {
+                        this.afterMove(field, move);
+                    });
+                }
             }
         }
     }
 
     movePiece(field: Field, move: string) {
         if (field.piece) {
-            field.piece.move(field, this.board.getField(parseInt(move[0]), parseInt(move[2])));
+            field.piece.move(field, this.board.getField(parseInt(move[0]), parseInt(move[2])), this.board);
         }
         for (let x = 0; x < this.board.boardSize; x++) {
             for (let y = 0; y < this.board.boardSize; y++) {
@@ -102,8 +114,23 @@ class Game {
             }
         }
     }
+
     changeTurn(): void {
         this.turn = this.turn === 'white' ? 'black' : 'white';
+    }
+
+    getKingPosition(pieceside: string): string {
+        const kingPosition = this.board.fields.flat().filter(
+            field => field.piece?.display === `<i class="fas fa-chess-king ${pieceside}"></i>`
+        );
+        return `${kingPosition[0].x},${kingPosition[0].y}`;
+    }
+
+    isCheck() {
+        const counterSide = this.turn === 'white' ? 'black' : 'white';
+        const kingPosition = this.getKingPosition(counterSide); 
+
+        return this.allAttackingMovesBySide(this.turn).includes(kingPosition);
     }
     changeClock(): void {
         if (this.turn === 'white') {
@@ -114,7 +141,6 @@ class Game {
             this.whiteClock.stopClock();
         }
     }
-
 }
 
 export default Game;

@@ -1,6 +1,6 @@
 import { BasicPiece } from '../types';
-import Board from '../Board';
-import Field from '../Field';
+import Board from '../board';
+import Field from '../field';
 
 abstract class Piece implements BasicPiece {
     abstract display: string;
@@ -9,7 +9,7 @@ abstract class Piece implements BasicPiece {
         this.side = side;
     }
 
-    move(oldField: Field, newField: Field): void {
+    move(oldField: Field, newField: Field, board: Board): void {
         oldField.piece = null;
         (document.getElementById(`${oldField.x},${oldField.y}`) as HTMLDivElement).innerHTML = '';
 

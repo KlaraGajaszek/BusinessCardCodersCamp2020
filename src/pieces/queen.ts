@@ -1,6 +1,6 @@
-import Piece from './Piece';
-import Board from '../Board';
-import Field from '../Field';
+import Piece from './piece';
+import Board from '../board';
+import Field from '../field';
 
 class Queen extends Piece {
     display: string;
