@@ -1,5 +1,6 @@
 import Board from './Board';
 import Clock from './clock';
+import GameOver from './gameOver';
 import Field from './Field';
 import Pawn from './pieces/pawn';
 
@@ -8,6 +9,7 @@ class Game {
     whiteClock: Clock;
     blackClock: Clock;
     turn: string;
+    gameOverScreen: GameOver;
 
     constructor() {
         this.turn = "white";
@@ -18,6 +20,9 @@ class Game {
         this.blackClock.render();
         this.whiteClock = new Clock('white', 15, 0, 'whiteClock');
         this.whiteClock.render();
+        this.gameOverScreen = new GameOver();
+        this.gameOverScreen.gameOverScreenTrigger();
+        this.gameOverScreen.render();
     }
 
     afterMove(field: Field, move: string) {
@@ -36,7 +41,7 @@ class Game {
         for (let x = 0; x < this.board.boardSize; x++) {
             for (let y = 0; y < this.board.boardSize; y++) {
                 if (this.board.fields[x][y].piece instanceof Pawn && (this.board.fields[x][y].piece as Pawn).isEnPassantPossible) {
-                    (this.board.fields[x][y].piece as Pawn).isEnPassantPossible = false;   
+                    (this.board.fields[x][y].piece as Pawn).isEnPassantPossible = false;
                 }
             }
         }
@@ -128,7 +133,7 @@ class Game {
 
     isCheck() {
         const counterSide = this.turn === 'white' ? 'black' : 'white';
-        const kingPosition = this.getKingPosition(counterSide); 
+        const kingPosition = this.getKingPosition(counterSide);
 
         return this.allAttackingMovesBySide(this.turn).includes(kingPosition);
     }
