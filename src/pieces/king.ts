@@ -76,6 +76,11 @@ class King extends Piece {
             }
         });
 
+        if (!this.hasPieceMoved) {
+            if (this.isLongCastlingPossible(board, actualField)) possibleMoves.push(`${actualField.x},2`);
+            if (this.isShortCastlingPossible(board, actualField)) possibleMoves.push(`${actualField.x},6`);
+        }
+
         return possibleMoves;
     }
 
