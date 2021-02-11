@@ -17,20 +17,20 @@ class Game {
     afterMove(field: Field, move: string) {
         const newField = this.board.getField(parseInt(move[0]), parseInt(move[2]));
         this.movePiece(field, newField);
-        this.changeTurn();
         this.promotePawn(newField);
+        this.changeTurn();
         // Logika która powinna znajdować sie po ruchu znajduje się tutaj,
         // oczywiście chodzi tutaj o wywołania odpowiednich funkcji tylko :)
         // czyli np. sprawdzenie czy jest szach, mat, pat, zmiana tury itp.
     }
 
     promotePawn(newField: Field): void {
-        const color = newField.piece!.side 
-        const field = newField.piece?.side === 'white' ? 0 : 7 
+        const color  = this.turn === 'white' ? 0 : 7
+        // const field = newField.piece?.side === 'white' ? 0 : 7 
         for (let y = 0; y < this.board.boardSize; y++) {
-            if (this.board.fields[field][y].piece instanceof Pawn) {
-                this.board.fields[field][y].piece = new Queen(color);
-                this.board.fields[field][y].piece?.render(newField);
+            if (this.board.fields[color][y].piece instanceof Pawn) {
+                this.board.fields[color][y].piece = new Queen(this.turn);
+                this.board.fields[color][y].piece?.render(newField);
             }
         }
     }
