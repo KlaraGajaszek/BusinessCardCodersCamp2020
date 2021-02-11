@@ -25,18 +25,12 @@ class Game {
     }
 
     promotePawn(newField: Field): void {
+        const color = newField.piece!.side 
+        const field = newField.piece?.side === 'white' ? 0 : 7 
         for (let y = 0; y < this.board.boardSize; y++) {
-                if (this.board.fields[0][y].piece instanceof Pawn && this.board.fields[0][y].piece?.side !== null && this.board.fields[0][y].piece?.side === 'white') {
-                    this.board.fields[0][y].piece = new Queen('white');
-                    this.board.fields[0][y].piece?.render(newField);
-                }
-                
-            }
-
-        for ( let y = 0; y < this.board.boardSize; y++){
-            if (this.board.fields[7][y].piece instanceof Pawn && this.board.fields[7][y].piece?.side !== null && this.board.fields[7][y].piece?.side === 'black') {
-                this.board.fields[7][y].piece = new Queen('black');
-                this.board.fields[7][y].piece?.render(newField); 
+            if (this.board.fields[field][y].piece instanceof Pawn) {
+                this.board.fields[field][y].piece = new Queen(color);
+                this.board.fields[field][y].piece?.render(newField);
             }
         }
     }
