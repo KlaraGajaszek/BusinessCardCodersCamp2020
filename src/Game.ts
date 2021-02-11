@@ -1,16 +1,23 @@
-import Board from './board';
-import Field from './field';
+import Board from './Board';
+import Clock from './clock';
+import Field from './Field';
 import Pawn from './pieces/pawn';
 
 class Game {
     board: Board;
+    whiteClock: Clock;
+    blackClock: Clock;
     turn: string;
 
     constructor() {
+        this.turn = "white";
         this.board = new Board();
         this.board.initBoard();
         this.setup();
-        this.turn = 'white';
+        this.blackClock = new Clock('black', 15, 0, 'blackClock');
+        this.blackClock.render();
+        this.whiteClock = new Clock('white', 15, 0, 'whiteClock');
+        this.whiteClock.render();
     }
 
     afterMove(field: Field, move: string) {
@@ -18,6 +25,8 @@ class Game {
         this.movePiece(field, move);
         this.isCheck();
         this.changeTurn();
+        this.changeClock();
+
         // Logika która powinna znajdować sie po ruchu znajduje się tutaj,
         // oczywiście chodzi tutaj o wywołania odpowiednich funkcji tylko :)
         // czyli np. sprawdzenie czy jest szach, mat, pat, zmiana tury itp.
@@ -122,6 +131,15 @@ class Game {
         const kingPosition = this.getKingPosition(counterSide); 
 
         return this.allAttackingMovesBySide(this.turn).includes(kingPosition);
+    }
+    changeClock(): void {
+        if (this.turn === 'white') {
+            this.whiteClock.startClock();
+            this.blackClock.stopClock();
+        } else if (this.turn === 'black') {
+            this.blackClock.startClock();
+            this.whiteClock.stopClock();
+        }
     }
 }
 
