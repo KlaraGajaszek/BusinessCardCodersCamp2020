@@ -146,9 +146,16 @@ class Game {
     isCheck() {
         const counterSide = this.turn === 'white' ? 'black' : 'white';
         const kingPosition = this.getKingPosition(counterSide); 
+        const isChecked = this.allAttackingMovesBySide(this.turn).includes(kingPosition);
 
-        return this.allAttackingMovesBySide(this.turn).includes(kingPosition);
+        if(isChecked) {
+            const kingField = document.getElementById(kingPosition);
+            kingField?.animate({ backgroundColor: "#ff2525", offset: 0.5 }, { duration: 1200, iterations: 3 });
+        }
+
+        return isChecked;
     }
+
     changeClock(): void {
         if (this.turn === 'white') {
             this.whiteClock.startClock();
