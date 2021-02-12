@@ -5,7 +5,7 @@ import Field from '../field';
 class Bishop extends Piece {
   display: string;
 
-  constructor(side: string) {
+  constructor(side: string,) {
     super(side);
     this.display = `<i class="fas fa-chess-bishop ${side}"></i>`;
   }
