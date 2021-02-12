@@ -14,6 +14,9 @@ abstract class Piece implements BasicPiece {
         (document.getElementById(`${oldField.x},${oldField.y}`) as HTMLDivElement).innerHTML = '';
 
         newField.piece = this;
+        this.render(newField)
+    }
+    render(newField: Field) {
         (document.getElementById(`${newField.x},${newField.y}`) as HTMLDivElement).innerHTML = this.display;
     }
 

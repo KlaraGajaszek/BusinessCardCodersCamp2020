@@ -1,3 +1,4 @@
+import Queen from './pieces/queen';
 import Board from './Board';
 import Clock from './clock';
 import Field from './Field';
@@ -19,18 +20,34 @@ class Game {
         this.whiteClock = new Clock('white', 15, 0, 'whiteClock');
         this.whiteClock.render();
     }
-
+    
     afterMove(field: Field, move: string) {
+
+        const newField = this.board.getField(parseInt(move[0]), parseInt(move[2]));
+        this.movePiece(field, newField);
+        this.promotePawn(newField);
         this.updateEnpassantStatus();
         this.movePiece(field, move);
         this.isCheck();
         this.changeTurn();
         this.changeClock();
-
         // Logika która powinna znajdować sie po ruchu znajduje się tutaj,
         // oczywiście chodzi tutaj o wywołania odpowiednich funkcji tylko :)
         // czyli np. sprawdzenie czy jest szach, mat, pat, zmiana tury itp.
     }
+
+
+    promotePawn(newField: Field): void {
+        const color  = this.turn === 'white' ? 0 : 7
+        // const field = newField.piece?.side === 'white' ? 0 : 7 
+        for (let y = 0; y < this.board.boardSize; y++) {
+            if (this.board.fields[color][y].piece instanceof Pawn) {
+                this.board.fields[color][y].piece = new Queen(this.turn);
+                this.board.fields[color][y].piece?.render(newField);
+            }
+        }
+    }
+    
 
     updateEnpassantStatus() {
         for (let x = 0; x < this.board.boardSize; x++) {
@@ -94,9 +111,9 @@ class Game {
         }
     }
 
-    movePiece(field: Field, move: string) {
+    movePiece(field: Field, newField: Field) {
         if (field.piece) {
-            field.piece.move(field, this.board.getField(parseInt(move[0]), parseInt(move[2])), this.board);
+            field.piece.move(field, newField);
         }
         for (let x = 0; x < this.board.boardSize; x++) {
             for (let y = 0; y < this.board.boardSize; y++) {
