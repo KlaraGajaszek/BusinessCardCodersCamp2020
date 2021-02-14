@@ -149,6 +149,10 @@ class Game {
 
         return this.allAttackingMovesBySide(this.turn).includes(kingPosition);
     }
+
+    isStalemate(): boolean {
+         return this.isCheck() && this.allAttackingMovesBySide(this.turn).length === 0
+    }
     changeClock(): void {
         if (this.turn === 'white') {
             this.whiteClock.startClock();
