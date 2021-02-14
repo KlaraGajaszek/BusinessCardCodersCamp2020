@@ -29,6 +29,7 @@ class Game {
         this.updateEnpassantStatus();
         this.movePiece(field, move);
         this.isCheck();
+        this.isStalemate();
         this.changeTurn();
         this.changeClock();
         // Logika która powinna znajdować sie po ruchu znajduje się tutaj,
@@ -61,6 +62,9 @@ class Game {
 
     allAttackingMovesBySide(color: string) {
         return this.getAllPiecesBySide(color).map(field => field?.piece?.findAttackingMoves(this.board, field)).flat()
+    }
+    allPossibleMovesBySide(color: string) {
+        return this.getAllPiecesBySide(color).map(field => field?.piece?.findLegalMoves(this.board, field)).flat()
     }
 
     getAllPiecesBySide(color: string): Field[] {
@@ -151,7 +155,11 @@ class Game {
     }
 
     isStalemate(): boolean {
-         return this.isCheck() && this.allAttackingMovesBySide(this.turn).length === 0
+        const counterSide = this.turn === 'white' ? 'black' : 'white';
+
+         const a =  !this.isCheck() && this.allPossibleMovesBySide(counterSide).length === 0
+         console.log(a)
+         return a
     }
     changeClock(): void {
         if (this.turn === 'white') {
