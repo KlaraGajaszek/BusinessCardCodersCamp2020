@@ -3,14 +3,16 @@ html {
 }
 
 * {
+  margin: 0;
+  padding: 0;
   box-sizing: border-box;
 
 }
 
 body {
-  background-image: linear-gradient(rgb(119, 50, 3), rgb(253, 163, 103));
-  background: linear-gradient(0.25turn, #3f87a6, #ebf8e1, #aa968a);
-  background: linear-gradient(0.25turn, #0f7173, #ebf8e1, #aa968a);
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
 }
 
 #wrapper {
@@ -20,6 +22,7 @@ body {
   align-items: center;
   height: 100vh;
   position: relative;
+  background: linear-gradient(0.25turn, #8A897C, #ebf8e1, #aa968a);
 }
 
 #board {
@@ -46,6 +49,7 @@ body {
   background: rgb(46, 46, 82);
 }
 
+
 .black {
   color: black;
 }
@@ -59,16 +63,52 @@ body {
 }
 
 /* ======== ostylowanie PAWN ======== */
-.promoChoice {
-  width: 10vh;
+#promoContainer {
+  width: 40vw;
   height: 40vh;
-  background-color: lightgrey;
-  outline: 1px gray solid;
-  transform: translate(10px, 2px);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  z-index: -1;
+  transition: 1s;
 }
 
-.promoChoiceItem:hover {
+#promoContainer p {
+  width: 100%;
+  font-family: 'Orbitron';
+  font-size: 30px;
+  margin: 10% 0 5% 0;
+  padding: 0;
+  text-align: center;
   color: white;
+}
+
+.promo {
+  display: flex;
+  width: 60vh;
+  height: 15vh;
+  margin: 0 auto 10% auto;
+  /* background-color: lightgrey; */
+
+  /* transform: translateX(-50%); */
+}
+
+.promo div {
+  width: 15vh;
+  height: 15vh;
+  text-align: center;
+  line-height: 15vh;
+  font-size: 10vh;
+  transition: 0.3s;
+  border-radius: 50%;
+}
+
+
+
+.promo div:hover {
+  background-image: linear-gradient(rgb(133, 212, 243), rgb(46, 46, 82));
 }
 
 .promoChoiceList {
@@ -171,5 +211,88 @@ body {
 
   100% {
     transform: rotate(360deg)
+  }
+}
+
+#start {
+  position: relative;
+  font-family: 'Orbitron';
+  color: white;
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  z-index: 1;
+  background-image: url(/imgs/startBcg.jpg);
+  background-size: 140%;
+  background-position: center;
+  animation: bcg 10s 6s infinite alternate linear;
+}
+
+#start h3 {
+  position: absolute;
+  width: 50vw;
+  top: 20%;
+  left: 30%;
+  text-align: left;
+  opacity: 1;
+  animation: pretittle 2s both;
+}
+
+#start h1 {
+  position: absolute;
+  width: 50%;
+  top: 25%;
+  left: 30%;
+  text-align: left;
+  font-size: 100px;
+  transform: scale(1);
+  animation: pretittle 2s 2s both;
+
+}
+
+#start button {
+  position: absolute;
+  width: 10vw;
+  height: 5vh;
+  top: 50%;
+  left: 50%;
+  font-family: 'Orbitron';
+  transform: translateX(-30%);
+  text-align: left;
+  opacity: 1;
+  background-color: transparent;
+  border: 3px solid white;
+  border-radius: 5px;
+  color: white;
+  text-align: center;
+  transition: 0.3s;
+  animation: pretittle 2s 4s both;
+}
+
+#start button:hover {
+  color: black;
+  background-color: white;
+}
+
+@keyframes pretittle {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 100%
+  }
+}
+
+
+@keyframes bcg {
+  0% {
+
+    background-size: 140%;
+  }
+
+  100% {
+
+    background-size: 160%;
   }
 }
