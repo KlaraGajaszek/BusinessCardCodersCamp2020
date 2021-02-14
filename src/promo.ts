@@ -1,14 +1,9 @@
-
-
 class Promo {
-
-
   constructor() {
-
-
+    this.render()
   }
 
-  public promoteRender() {
+  promoteRender() {
     const promoContainer = document.getElementById('promoContainer');
     promoContainer?.classList.add('dark');
     const promoTittle = document.createElement('p');
@@ -32,7 +27,7 @@ class Promo {
 
   }
 
-  public promoScreenTrigger() {
+  promoScreenTrigger() {
     const wrapper = document.getElementById('wrapper')! as HTMLDivElement;
     const promo = document.getElementById('promoContainer')! as HTMLDivElement;
     wrapper.style.filter = 'blur(10px)';
@@ -40,7 +35,7 @@ class Promo {
     promo.style.opacity = '1';
   }
 
-  public promoScreenClose() {
+  promoScreenClose() {
     const wrapper = document.getElementById('wrapper')! as HTMLDivElement;
     const promo = document.getElementById('promoContainer')! as HTMLDivElement;
     wrapper.style.filter = 'none';
@@ -48,8 +43,7 @@ class Promo {
     promo.style.opacity = '-1';
   }
 
-
-  public render() {
+  render() {
     this.promoteRender();
   }
 

@@ -25,63 +25,62 @@ class Game {
         this.whiteClock = new Clock('white', 15, 0, 'whiteClock');
         this.whiteClock.render();
         this.promo = new Promo();
-        this.promo.render();
     }
 
     afterMove(field: Field, move: string) {
-
         const newField = this.board.getField(parseInt(move[0]), parseInt(move[2]));
         this.movePiece(field, newField);
         this.updateEnpassantStatus();
         this.movePiece(field, move);
         this.isCheck();
-        if (newField.piece instanceof Pawn) {
+        if (newField.piece?.display?.match(/pawn/i) && ['0','7'].includes(move[0])) {
             this.promotePawn(newField)
         } else {
             this.changeTurn();
             this.changeClock();
         }
-        // Logika która powinna znajdować sie po ruchu znajduje się tutaj,
-        // oczywiście chodzi tutaj o wywołania odpowiednich funkcji tylko :)
-        // czyli np. sprawdzenie czy jest szach, mat, pat, zmiana tury itp.
     }
 
-
     promotePawn(newField: Field): void {
-        const color = this.turn === 'white' ? 0 : 7;
-        // const field = newField.piece?.side === 'white' ? 0 : 7 
-        for (let y = 0; y < this.board.boardSize; y++) {
-            if (this.board.fields[color][y].piece instanceof Pawn) {
-                this.promo.promoScreenTrigger();
-                const possiblePromoPieces = document.querySelectorAll('.promo div');
-                possiblePromoPieces.forEach(piece => {
-                    piece.addEventListener('click', () => {
-                        if (piece.innerHTML.includes('rook')) {
-                            this.board.fields[color][y].piece = new Rook(this.turn);
-                            this.board.fields[color][y].piece?.render(newField);
-                        } else if (piece.innerHTML.includes('bishop')) {
-                            this.board.fields[color][y].piece = new Bishop(this.turn);
-                            this.board.fields[color][y].piece?.render(newField);
-                        } else if (piece.innerHTML.includes('queen')) {
-                            this.board.fields[color][y].piece = new Queen(this.turn);
-                            this.board.fields[color][y].piece?.render(newField);
-                        } else if (piece.innerHTML.includes('knight')) {
-                            this.board.fields[color][y].piece = new Knight(this.turn);
-                            this.board.fields[color][y].piece?.render(newField);
-                        }
-                        this.promo.promoScreenClose();
-                        this.changeTurn();
-                        this.changeClock();
+        if(newField.piece instanceof Pawn) {
+            const color = this.turn === 'white' ? 0 : 7;
+            for (let y = 0; y < this.board.boardSize; y++) {
+                if (this.board.fields[color][y].piece?.display?.match(/pawn/i) && ['0','7'].includes(color.toString())) {
+                    this.promo.promoScreenTrigger();
+                    const possiblePromoPieces = document.querySelectorAll('.promo div');
+                    possiblePromoPieces.forEach(piece => {
+                        piece.addEventListener('click', () => {
+                            this.choosePieceToPromote(piece, color, newField, y)
+                            this.promo.promoScreenClose();
+                        })
                     })
-                })
-                return;
+                }
             }
         }
+    }
+
+    choosePieceToPromote(piece, color: number, newField: Field, y: number) {
+        (document.getElementById(`${color},${y}`) as HTMLDivElement).innerHTML = '';
+        this.board.fields[color][y].piece = null
+
+        if (piece.innerHTML.includes('rook')) {
+            new Field(0, 0, new Rook('black'))
+            this.board.fields[color][y] = new Field(color, y, new Rook('black'))
+            this.board.fields[color][y].piece?.render(newField);
+        } else if (piece.innerHTML.includes('bishop')) {
+            this.board.fields[color][y].piece = new Bishop(this.turn);
+            this.board.fields[color][y].piece?.render(newField);
+        } else if (piece.innerHTML.includes('queen')) {
+            this.board.fields[color][y].piece = new Queen(this.turn);
+            this.board.fields[color][y].piece?.render(newField);
+        } else if (piece.innerHTML.includes('knight')) {
+            this.board.fields[color][y].piece = new Knight(this.turn);
+            this.board.fields[color][y].piece?.render(newField);
+        }
+        this.promo.promoScreenClose();
         this.changeTurn();
         this.changeClock();
     }
-
-
 
     updateEnpassantStatus() {
         for (let x = 0; x < this.board.boardSize; x++) {
