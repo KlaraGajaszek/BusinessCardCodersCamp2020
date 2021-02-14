@@ -46,6 +46,7 @@ body {
   background: rgb(46, 46, 82);
 }
 
+
 .black {
   color: black;
 }
@@ -59,16 +60,52 @@ body {
 }
 
 /* ======== ostylowanie PAWN ======== */
-.promoChoice {
-  width: 10vh;
+#promoContainer {
+  width: 40vw;
   height: 40vh;
-  background-color: lightgrey;
-  outline: 1px gray solid;
-  transform: translate(10px, 2px);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  z-index: -1;
+  transition: 1s;
 }
 
-.promoChoiceItem:hover {
+#promoContainer p {
+  width: 100%;
+  font-family: 'Orbitron';
+  font-size: 30px;
+  margin: 10% 0 5% 0;
+  padding: 0;
+  text-align: center;
   color: white;
+}
+
+.promo {
+  display: flex;
+  width: 60vh;
+  height: 15vh;
+  margin: 0 auto 10% auto;
+  /* background-color: lightgrey; */
+
+  /* transform: translateX(-50%); */
+}
+
+.promo div {
+  width: 15vh;
+  height: 15vh;
+  text-align: center;
+  line-height: 15vh;
+  font-size: 10vh;
+  transition: 0.3s;
+  border-radius: 50%;
+}
+
+
+
+.promo div:hover {
+  background-image: linear-gradient(rgb(133, 212, 243), rgb(46, 46, 82));
 }
 
 .promoChoiceList {

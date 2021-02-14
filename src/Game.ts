@@ -1,14 +1,19 @@
 import Queen from './pieces/queen';
+import Rook from './pieces/rook';
+import Bishop from './pieces/bishop';
+import Knight from './pieces/knight';
 import Board from './Board';
 import Clock from './clock';
 import Field from './Field';
 import Pawn from './pieces/pawn';
+import Promo from './promo';
 
 class Game {
     board: Board;
     whiteClock: Clock;
     blackClock: Clock;
     turn: string;
+    promo: Promo
 
     constructor() {
         this.turn = "white";
@@ -19,18 +24,23 @@ class Game {
         this.blackClock.render();
         this.whiteClock = new Clock('white', 15, 0, 'whiteClock');
         this.whiteClock.render();
+        this.promo = new Promo();
+        this.promo.render();
     }
-    
+
     afterMove(field: Field, move: string) {
 
         const newField = this.board.getField(parseInt(move[0]), parseInt(move[2]));
         this.movePiece(field, newField);
-        this.promotePawn(newField);
         this.updateEnpassantStatus();
         this.movePiece(field, move);
         this.isCheck();
-        this.changeTurn();
-        this.changeClock();
+        if (newField.piece instanceof Pawn) {
+            this.promotePawn(newField)
+        } else {
+            this.changeTurn();
+            this.changeClock();
+        }
         // Logika która powinna znajdować sie po ruchu znajduje się tutaj,
         // oczywiście chodzi tutaj o wywołania odpowiednich funkcji tylko :)
         // czyli np. sprawdzenie czy jest szach, mat, pat, zmiana tury itp.
@@ -38,22 +48,46 @@ class Game {
 
 
     promotePawn(newField: Field): void {
-        const color  = this.turn === 'white' ? 0 : 7
+        const color = this.turn === 'white' ? 0 : 7;
         // const field = newField.piece?.side === 'white' ? 0 : 7 
         for (let y = 0; y < this.board.boardSize; y++) {
             if (this.board.fields[color][y].piece instanceof Pawn) {
-                this.board.fields[color][y].piece = new Queen(this.turn);
-                this.board.fields[color][y].piece?.render(newField);
+                this.promo.promoScreenTrigger();
+                const possiblePromoPieces = document.querySelectorAll('.promo div');
+                possiblePromoPieces.forEach(piece => {
+                    piece.addEventListener('click', () => {
+                        if (piece.innerHTML.includes('rook')) {
+                            this.board.fields[color][y].piece = new Rook(this.turn);
+                            this.board.fields[color][y].piece?.render(newField);
+                        } else if (piece.innerHTML.includes('bishop')) {
+                            this.board.fields[color][y].piece = new Bishop(this.turn);
+                            this.board.fields[color][y].piece?.render(newField);
+                        } else if (piece.innerHTML.includes('queen')) {
+                            this.board.fields[color][y].piece = new Queen(this.turn);
+                            this.board.fields[color][y].piece?.render(newField);
+                        } else if (piece.innerHTML.includes('knight')) {
+                            this.board.fields[color][y].piece = new Knight(this.turn);
+                            this.board.fields[color][y].piece?.render(newField);
+                        }
+                        this.promo.promoScreenClose();
+                        this.changeTurn();
+                        this.changeClock();
+                    })
+                })
+                return;
             }
         }
+        this.changeTurn();
+        this.changeClock();
     }
-    
+
+
 
     updateEnpassantStatus() {
         for (let x = 0; x < this.board.boardSize; x++) {
             for (let y = 0; y < this.board.boardSize; y++) {
                 if (this.board.fields[x][y].piece instanceof Pawn && (this.board.fields[x][y].piece as Pawn).isEnPassantPossible) {
-                    (this.board.fields[x][y].piece as Pawn).isEnPassantPossible = false;   
+                    (this.board.fields[x][y].piece as Pawn).isEnPassantPossible = false;
                 }
             }
         }
@@ -145,7 +179,7 @@ class Game {
 
     isCheck() {
         const counterSide = this.turn === 'white' ? 'black' : 'white';
-        const kingPosition = this.getKingPosition(counterSide); 
+        const kingPosition = this.getKingPosition(counterSide);
 
         return this.allAttackingMovesBySide(this.turn).includes(kingPosition);
     }
