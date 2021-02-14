@@ -41,7 +41,6 @@ class Promo {
   }
 
   public promoScreenClose() {
-    console.log('klik');
     const wrapper = document.getElementById('wrapper')! as HTMLDivElement;
     const promo = document.getElementById('promoContainer')! as HTMLDivElement;
     wrapper.style.filter = 'none';
