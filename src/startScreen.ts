@@ -20,12 +20,13 @@ class StartGame {
   }
 
   public startGame() {
-    const startContainer = document.getElementById('start');
+    const startContainer = document.getElementById('start')! as HTMLDivElement;
     const startBtn = document.querySelector('#start button')! as HTMLButtonElement;
     startBtn.addEventListener('click', () => {
-      if (startContainer)
-        startContainer.style.zIndex = '-1';
-    })
+      startContainer.style.opacity = '0';
+      startContainer.style.zIndex = '-1';
+
+    });
   }
 
 
