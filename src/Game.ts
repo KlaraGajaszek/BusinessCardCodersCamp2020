@@ -144,11 +144,25 @@ class Game {
     }
 
     isCheck() {
-        const counterSide = this.turn === 'white' ? 'black' : 'white';
-        const kingPosition = this.getKingPosition(counterSide); 
+        let isCheck = false;
 
-        return this.allAttackingMovesBySide(this.turn).includes(kingPosition);
+        ['white', 'black'].forEach(side => {
+            const counterSide = side === 'white' ? 'black' : 'white';
+            const kingPosition = this.getKingPosition(counterSide);
+
+            const kingField = document.getElementById(kingPosition);
+
+            const isChecked = this.allAttackingMovesBySide(side).includes(kingPosition);
+
+            if(isChecked) {
+                kingField?.animate({ backgroundColor: "#ff2525", offset: 0.5 }, { duration: 1200, iterations: 3 });
+                isCheck = true;
+            }
+        })
+        
+        return isCheck;
     }
+
     changeClock(): void {
         if (this.turn === 'white') {
             this.whiteClock.startClock();
