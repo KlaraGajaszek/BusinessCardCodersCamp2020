@@ -156,10 +156,7 @@ class Game {
 
     isStalemate(): boolean {
         const counterSide = this.turn === 'white' ? 'black' : 'white';
-
-         const a =  !this.isCheck() && this.allPossibleMovesBySide(counterSide).length === 0
-         console.log(a)
-         return a
+        return !this.isCheck() && this.allPossibleMovesBySide(counterSide).length === 0;
     }
     changeClock(): void {
         if (this.turn === 'white') {
