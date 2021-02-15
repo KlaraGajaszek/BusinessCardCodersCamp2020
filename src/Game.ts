@@ -27,8 +27,8 @@ class Game {
         this.movePiece(field, newField);
         this.promotePawn(newField);
         this.updateEnpassantStatus();
-        this.movePiece(field, move);
         this.isCheck();
+        this.isStalemate();
         this.changeTurn();
         this.changeClock();
         // Logika która powinna znajdować sie po ruchu znajduje się tutaj,
@@ -39,7 +39,6 @@ class Game {
 
     promotePawn(newField: Field): void {
         const color  = this.turn === 'white' ? 0 : 7
-        // const field = newField.piece?.side === 'white' ? 0 : 7 
         for (let y = 0; y < this.board.boardSize; y++) {
             if (this.board.fields[color][y].piece instanceof Pawn) {
                 this.board.fields[color][y].piece = new Queen(this.turn);
@@ -47,7 +46,6 @@ class Game {
             }
         }
     }
-    
 
     updateEnpassantStatus() {
         for (let x = 0; x < this.board.boardSize; x++) {
@@ -61,6 +59,9 @@ class Game {
 
     allAttackingMovesBySide(color: string) {
         return this.getAllPiecesBySide(color).map(field => field?.piece?.findAttackingMoves(this.board, field)).flat()
+    }
+    allPossibleMovesBySide(color: string) {
+        return this.getAllPiecesBySide(color).map(field => field?.piece?.findLegalMoves(this.board, field)).flat()
     }
 
     getAllPiecesBySide(color: string): Field[] {
@@ -93,6 +94,7 @@ class Game {
     touched(e: MouseEvent) {
         const target = e.currentTarget;
         if (target) {
+           
             const x: number = parseInt((target as HTMLDivElement).id[0]);
             const y: number = parseInt((target as HTMLDivElement).id[2]);
 
@@ -101,10 +103,13 @@ class Game {
 
             if (this.turn === field.piece.side) {
                 const possibleMoves = field.piece.findLegalMoves(this.board, field);
+                const allPossibleMoveElements = document.querySelectorAll('.possibleMove');
+                allPossibleMoveElements.forEach(e => (e as HTMLDListElement).classList.remove('possibleMove'))
                 for (let move of possibleMoves) {
-                    (document.getElementById(move) as HTMLDivElement).className += ` possibleMove`;
+                    (document.getElementById(move) as HTMLDivElement).classList.add('possibleMove');
                     (document.getElementById(move) as HTMLDivElement).addEventListener('click', () => {
                         this.afterMove(field, move);
+                       
                     });
                 }
             }
@@ -113,7 +118,7 @@ class Game {
 
     movePiece(field: Field, newField: Field) {
         if (field.piece) {
-            field.piece.move(field, newField);
+            field.piece.move(field, newField, this.board);
         }
         for (let x = 0; x < this.board.boardSize; x++) {
             for (let y = 0; y < this.board.boardSize; y++) {
@@ -148,6 +153,11 @@ class Game {
         const kingPosition = this.getKingPosition(counterSide); 
 
         return this.allAttackingMovesBySide(this.turn).includes(kingPosition);
+    }
+
+    isStalemate(): boolean {
+        const counterSide = this.turn === 'white' ? 'black' : 'white';
+        return !this.isCheck() && this.allPossibleMovesBySide(counterSide).length === 0;
     }
     changeClock(): void {
         if (this.turn === 'white') {
