@@ -13,6 +13,8 @@ class StartGame {
     startContainer?.appendChild(startBtn);
   }
 
+  //TODO Może z tej funkcji renderujmy new Game() po wcisnieciu start, a wywołanie tego możemy dać do main.ts
+
   startGame() {
     const startContainer = document.getElementById('start')! as HTMLDivElement;
     const startBtn = document.querySelector('#start button')! as HTMLButtonElement;
