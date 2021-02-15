@@ -15,6 +15,10 @@ class Clock {
 
   public clockRender() {
     const container = document.getElementById('clock-wrapper');
+    const sideName = document.createElement('div');
+    sideName.setAttribute('class', 'sideName');
+    sideName.innerText = `${this.styleName}` === 'whiteClock' ? 'White' : 'Black';
+    container?.appendChild(sideName);
     const clock = document.createElement('div');
     clock.setAttribute('class', this.styleName);
     container?.appendChild(clock);
@@ -41,19 +45,23 @@ class Clock {
   };
   public startClock() {
     this.interval = setInterval(this.countDown.bind(this), 1000);
+    const clock = document.querySelector(`.${this.styleName}`)! as HTMLDivElement;
     const propeller = document.querySelector(`.${this.styleName} .clockFace`)! as HTMLDivElement;
+    clock.style.boxShadow = "0 0px 30px 5px rgb(46, 46, 82)";
     if (propeller !== null) {
       propeller.style.filter = 'none';
-      propeller.style.animation = 'rotate 2s infinite linear';
+      propeller.style.animation = 'rotate 3s infinite linear';
     }
   }
 
   public stopClock() {
     clearInterval(this.interval);
+    const clock = document.querySelector(`.${this.styleName}`)! as HTMLDivElement;
     const propeller = document.querySelector(`.${this.styleName} .clockFace`)! as HTMLDivElement;
+    clock.style.boxShadow = "none";
     if (propeller !== null) {
       propeller.style.filter = "grayscale()";
-      propeller.style.animation = 'rotate 2s paused linear'
+      propeller.style.animation = 'rotate 3s paused linear'
     }
   }
 
