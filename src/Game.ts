@@ -4,13 +4,15 @@ import Clock from './clock';
 import Field from './Field';
 import Pawn from './pieces/pawn';
 import StartGame from './startScreen';
+import Logo from './logo';
 
 class Game {
     board: Board;
     whiteClock: Clock;
     blackClock: Clock;
     turn: string;
-    startGame: StartGame
+    startGame: StartGame;
+    logo: Logo
 
     constructor() {
         this.turn = "white";
@@ -24,6 +26,8 @@ class Game {
         this.startGame = new StartGame();
         this.startGame.render();
         this.startGame.startGame();
+        this.logo = new Logo();
+        this.logo.render();
     }
 
     afterMove(field: Field, move: string) {
