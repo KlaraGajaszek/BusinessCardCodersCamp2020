@@ -61,7 +61,7 @@ body {
 }
 
 .possibleMove {
-  background: rgba(222, 247, 2, 0.6);
+  background: rgba(222, 247, 2, 0.3);
 }
 
 /* ======== ostylowanie PAWN ======== */
@@ -298,6 +298,7 @@ body {
   border-radius: 5px;
   color: white;
   text-align: center;
+  letter-spacing: 2px;
   transition: 0.3s;
   animation: pretittle 2s 4s both;
 }

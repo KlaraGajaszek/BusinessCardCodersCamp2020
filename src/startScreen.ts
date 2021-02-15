@@ -1,11 +1,5 @@
 class StartGame {
 
-
-  constructor() {
-
-
-  }
-
   public promoteRender() {
     const startContainer = document.getElementById('start');
     const preTittle = document.createElement('h3');
@@ -19,7 +13,7 @@ class StartGame {
     startContainer?.appendChild(startBtn);
   }
 
-  public startGame() {
+  startGame() {
     const startContainer = document.getElementById('start')! as HTMLDivElement;
     const startBtn = document.querySelector('#start button')! as HTMLButtonElement;
     startBtn.addEventListener('click', () => {
@@ -28,14 +22,10 @@ class StartGame {
         startContainer.style.zIndex = '-1';
 
       }, 2000);
-      // startContainer.style.zIndex = '-1';
-
     });
   }
 
-
-
-  public render() {
+  render() {
     this.promoteRender();
   }
 
