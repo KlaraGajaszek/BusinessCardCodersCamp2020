@@ -3,12 +3,16 @@ import Board from './Board';
 import Clock from './clock';
 import Field from './Field';
 import Pawn from './pieces/pawn';
+import StartGame from './startScreen';
+import Logo from './logo';
 
 class Game {
     board: Board;
     whiteClock: Clock;
     blackClock: Clock;
     turn: string;
+    startGame: StartGame;
+    logo: Logo
 
     constructor() {
         this.turn = "white";
@@ -19,8 +23,13 @@ class Game {
         this.blackClock.render();
         this.whiteClock = new Clock('white', 15, 0, 'whiteClock');
         this.whiteClock.render();
+        this.startGame = new StartGame();
+        this.startGame.render();
+        this.startGame.startGame();
+        this.logo = new Logo();
+        this.logo.render();
     }
-    
+
     afterMove(field: Field, move: string) {
 
         const newField = this.board.getField(parseInt(move[0]), parseInt(move[2]));
@@ -29,13 +38,14 @@ class Game {
         this.promotePawn(newField);
         this.updateEnpassantStatus();
         this.changeTurn();
+        this.isStalemate();
         this.isCheck();
         if(this.isCheck()) this.backlightKing(this.board)
         this.changeClock();
     }
     
     promotePawn(newField: Field): void {
-        const color  = this.turn === 'white' ? 0 : 7
+        const color = this.turn === 'white' ? 0 : 7
         // const field = newField.piece?.side === 'white' ? 0 : 7 
         for (let y = 0; y < this.board.boardSize; y++) {
             if (this.board.fields[color][y].piece instanceof Pawn) {
@@ -44,13 +54,12 @@ class Game {
             }
         }
     }
-    
-    
+
     updateEnpassantStatus() {
         for (let x = 0; x < this.board.boardSize; x++) {
             for (let y = 0; y < this.board.boardSize; y++) {
                 if (this.board.fields[x][y].piece instanceof Pawn && (this.board.fields[x][y].piece as Pawn).isEnPassantPossible) {
-                    (this.board.fields[x][y].piece as Pawn).isEnPassantPossible = false;   
+                    (this.board.fields[x][y].piece as Pawn).isEnPassantPossible = false;
                 }
             }
         }
@@ -62,6 +71,10 @@ class Game {
     
     getAllPiecesBySide(color: string, board: Board = this.board): Field[] {
         return board.fields.flat().filter(field => field?.piece && field.piece.side === color)
+    }
+
+    allPossibleMovesBySide(color: string) {
+        return this.getAllPiecesBySide(color).map(field => field?.piece?.findLegalMoves(this.board, field)).flat()
     }
     
     setup() {
@@ -171,6 +184,11 @@ class Game {
         const isChecked = this.allAttackingMovesBySide(counterSide, board).includes(kingPosition);
         
         return isChecked ? true : false
+    }
+
+    isStalemate(): boolean {
+        const counterSide = this.turn === 'white' ? 'black' : 'white';
+        return !this.isCheck() && this.allPossibleMovesBySide(counterSide).length === 0;
     }
 
     changeClock(): void {
