@@ -24,6 +24,7 @@ class Game {
     afterMove(field: Field, move: string) {
 
         const newField = this.board.getField(parseInt(move[0]), parseInt(move[2]));
+
         this.movePiece(field, newField);
         this.promotePawn(newField);
         this.updateEnpassantStatus();
@@ -31,11 +32,23 @@ class Game {
         this.isCheck();
         this.changeTurn();
         this.changeClock();
-        // Logika która powinna znajdować sie po ruchu znajduje się tutaj,
-        // oczywiście chodzi tutaj o wywołania odpowiednich funkcji tylko :)
-        // czyli np. sprawdzenie czy jest szach, mat, pat, zmiana tury itp.
+        // this.canMove(field, newField)
     }
 
+    canMove(field: Field, newField: Field) {
+        //newField to pole na które możemy się ruszyć(jedno z possiebleMoves) które chcemy sprawdzać
+        //dla przykładu będzie to pole 5,1
+        // w tym momencie mamy ruch po już usunięciu field.piece
+        const copyBoard = this.board
+
+        copyBoard.fields[field.x][field.y].piece = null
+        copyBoard.fields[newField.x][newField.y] = field
+        copyBoard.fields[newField.x][newField.y].piece = newField.piece
+        console.log(copyBoard) // w tym console.log powinieneś zobaczyc ze na tym polu teraz stoi pion
+        // tzn. w zamyśle jakby, on został tam przesuniety tylko na ta sekunde, wszystkie dzialania są na głównym this.board wiec tamta plansza jest tylko pomocnicza
+        // myślę że dalej sobie poradzić już chyba powinieneś :D
+        return copyBoard;
+    }
 
     promotePawn(newField: Field): void {
         const color  = this.turn === 'white' ? 0 : 7
@@ -59,12 +72,12 @@ class Game {
         }
     }
 
-    allAttackingMovesBySide(color: string) {
-        return this.getAllPiecesBySide(color).map(field => field?.piece?.findAttackingMoves(this.board, field)).flat()
+    allAttackingMovesBySide(color: string, board: Board = this.board) {
+        return this.getAllPiecesBySide(color).map(field => field?.piece?.findAttackingMoves(board, field)).flat()
     }
 
-    getAllPiecesBySide(color: string): Field[] {
-        return this.board.fields.flat().filter(field => field?.piece && field.piece.side === color)
+    getAllPiecesBySide(color: string, board: Board = this.board): Field[] {
+        return board.fields.flat().filter(field => field?.piece && field.piece.side === color)
     }
 
     setup() {
@@ -100,7 +113,13 @@ class Game {
             if (!field?.piece) return;
 
             if (this.turn === field.piece.side) {
-                const possibleMoves = field.piece.findLegalMoves(this.board, field);
+                const possibleMoves = field.piece.findLegalMoves(this.board, field)
+                .filter(move => {
+                    let newField = this.board.getField(parseInt(move[0]), parseInt(move[2]));
+                    const mirror = this.canMove(field, newField);
+                    return !this.isCheck(mirror);
+                });
+                console.log(possibleMoves);
                 for (let move of possibleMoves) {
                     (document.getElementById(move) as HTMLDivElement).className += ` possibleMove`;
                     (document.getElementById(move) as HTMLDivElement).addEventListener('click', () => {
@@ -136,23 +155,23 @@ class Game {
         this.turn = this.turn === 'white' ? 'black' : 'white';
     }
 
-    getKingPosition(pieceside: string): string {
-        const kingPosition = this.board.fields.flat().filter(
+    getKingPosition(pieceside: string, board: Board = this.board): string {
+        const kingPosition = board.fields.flat().filter(
             field => field.piece?.display === `<i class="fas fa-chess-king ${pieceside}"></i>`
         );
         return `${kingPosition[0].x},${kingPosition[0].y}`;
     }
 
-    isCheck() {
+    isCheck(board: Board = this.board) {
         let isCheck = false;
 
         ['white', 'black'].forEach(side => {
             const counterSide = side === 'white' ? 'black' : 'white';
-            const kingPosition = this.getKingPosition(counterSide);
+            const kingPosition = this.getKingPosition(counterSide, board);
 
             const kingField = document.getElementById(kingPosition);
 
-            const isChecked = this.allAttackingMovesBySide(side).includes(kingPosition);
+            const isChecked = this.allAttackingMovesBySide(side, board).includes(kingPosition);
 
             if(isChecked) {
                 kingField?.animate({ backgroundColor: "#ff2525", offset: 0.5 }, { duration: 1200, iterations: 3 });
