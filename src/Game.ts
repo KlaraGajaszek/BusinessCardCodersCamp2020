@@ -118,21 +118,19 @@ class Game {
         kingField?.animate({ backgroundColor: "#ff2525", offset: 0.5 }, { duration: 1200, iterations: 3 });
     }
     
-    canMove(field: Field, move: string) {
+    canMove(field: Field, move: string) { // TO FIX
             const copyBoard = this.board;
             const newField = copyBoard.getField(parseInt(move[0]), parseInt(move[2]));
-            const x = field.piece
+            const piece = field.piece
             copyBoard.fields[field.x][field.y].piece = null;
 
-            copyBoard.fields[newField.x][newField.y].piece = x;
+            copyBoard.fields[newField.x][newField.y].piece = piece;
 
-            const a = !this.isCheck(copyBoard);
-            console.log(a)
-            console.log(this.turn);
+            const isCheck = !this.isCheck(copyBoard);
 
-            copyBoard.fields[field.x][field.y].piece = x;
+            copyBoard.fields[field.x][field.y].piece = piece;
             copyBoard.fields[newField.x][newField.y].piece = null;
-            return a
+            return isCheck
         }
     
     movePiece(field: Field, newField: Field) {
