@@ -24,6 +24,7 @@ class Game {
     afterMove(field: Field, move: string) {
 
         const newField = this.board.getField(parseInt(move[0]), parseInt(move[2]));
+        
         this.movePiece(field, newField);
         this.promotePawn(newField);
         this.updateEnpassantStatus();
@@ -31,9 +32,22 @@ class Game {
         this.isCheck();
         this.changeTurn();
         this.changeClock();
-        // Logika która powinna znajdować sie po ruchu znajduje się tutaj,
-        // oczywiście chodzi tutaj o wywołania odpowiednich funkcji tylko :)
-        // czyli np. sprawdzenie czy jest szach, mat, pat, zmiana tury itp.
+        this.canMove(field, newField) // To na razie przykładowe wywołanie ale docelowo na pewno nie w tym miejscu to bedzie
+    }
+
+    canMove(field: Field, newField: Field) {
+        //newField to pole na które możemy się ruszyć(jedno z possiebleMoves) które chcemy sprawdzać
+        //dla przykładu będzie to pole 5,1
+        // w tym momencie mamy ruch po już usunięciu field.piece
+        const copyBoard = this.board
+
+        copyBoard.fields[field.x][field.y].piece = null
+        copyBoard.fields[5][1] = field
+        copyBoard.fields[5][1].piece = newField.piece
+        console.log(copyBoard) // w tym console.log powinieneś zobaczyc ze na tym polu teraz stoi pion
+        // tzn. w zamyśle jakby, on został tam przesuniety tylko na ta sekunde, wszystkie dzialania są na głównym this.board wiec tamta plansza jest tylko pomocnicza
+        // myślę że dalej sobie poradzić już chyba powinieneś :D
+
     }
 
 
