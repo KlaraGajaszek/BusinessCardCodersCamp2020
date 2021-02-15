@@ -24,7 +24,11 @@ class StartGame {
     const startBtn = document.querySelector('#start button')! as HTMLButtonElement;
     startBtn.addEventListener('click', () => {
       startContainer.style.opacity = '0';
-      startContainer.style.zIndex = '-1';
+      setTimeout(() => {
+        startContainer.style.zIndex = '-1';
+
+      }, 2000);
+      // startContainer.style.zIndex = '-1';
 
     });
   }
