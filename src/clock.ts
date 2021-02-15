@@ -15,6 +15,10 @@ class Clock {
 
   public clockRender() {
     const container = document.getElementById('clock-wrapper');
+    const sideName = document.createElement('div');
+    sideName.setAttribute('class', 'sideName');
+    sideName.innerText = `${this.styleName}` === 'whiteClock' ? 'White' : 'Black';
+    container?.appendChild(sideName);
     const clock = document.createElement('div');
     clock.setAttribute('class', this.styleName);
     container?.appendChild(clock);
