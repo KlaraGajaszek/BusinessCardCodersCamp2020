@@ -34,22 +34,7 @@ class Game {
         this.changeClock();
         // this.canMove(field, newField)
     }
-
-    canMove(field: Field, newField: Field) {
-        //newField to pole na które możemy się ruszyć(jedno z possiebleMoves) które chcemy sprawdzać
-        //dla przykładu będzie to pole 5,1
-        // w tym momencie mamy ruch po już usunięciu field.piece
-        const copyBoard = this.board
-
-        copyBoard.fields[field.x][field.y].piece = null
-        copyBoard.fields[newField.x][newField.y] = field
-        copyBoard.fields[newField.x][newField.y].piece = newField.piece
-        console.log(copyBoard) // w tym console.log powinieneś zobaczyc ze na tym polu teraz stoi pion
-        // tzn. w zamyśle jakby, on został tam przesuniety tylko na ta sekunde, wszystkie dzialania są na głównym this.board wiec tamta plansza jest tylko pomocnicza
-        // myślę że dalej sobie poradzić już chyba powinieneś :D
-        return copyBoard;
-    }
-
+    
     promotePawn(newField: Field): void {
         const color  = this.turn === 'white' ? 0 : 7
         // const field = newField.piece?.side === 'white' ? 0 : 7 
@@ -61,7 +46,7 @@ class Game {
         }
     }
     
-
+    
     updateEnpassantStatus() {
         for (let x = 0; x < this.board.boardSize; x++) {
             for (let y = 0; y < this.board.boardSize; y++) {
@@ -71,15 +56,15 @@ class Game {
             }
         }
     }
-
+    
     allAttackingMovesBySide(color: string, board: Board = this.board) {
         return this.getAllPiecesBySide(color).map(field => field?.piece?.findAttackingMoves(board, field)).flat()
     }
-
+    
     getAllPiecesBySide(color: string, board: Board = this.board): Field[] {
         return board.fields.flat().filter(field => field?.piece && field.piece.side === color)
     }
-
+    
     setup() {
         const fields = this.board.fields;
         for (let x = 0; x < this.board.boardSize; x++) {
@@ -88,37 +73,34 @@ class Game {
                 square.id = `${x},${y}`;
                 square.className = 'square';
                 square.className += x % 2 == y % 2 ? ' light' : ' dark';
-
+                
                 let field = fields[x][y];
                 if (!field.isEmpty()) {
                     square.innerHTML = field.piece!.display;
                 }
-
+                
                 square.addEventListener('click', (e) => {
                     this.touched(e);
                 });
-
+                
                 document.getElementById('board')?.appendChild(square);
             }
         }
     }
-
+    
     touched(e: MouseEvent) {
         const target = e.currentTarget;
         if (target) {
             const x: number = parseInt((target as HTMLDivElement).id[0]);
             const y: number = parseInt((target as HTMLDivElement).id[2]);
-
+            
             const field: Field = this.board.getField(x, y);
             if (!field?.piece) return;
-
+            
             if (this.turn === field.piece.side) {
-                const possibleMoves = field.piece.findLegalMoves(this.board, field)
-                .filter(move => {
-                    let newField = this.board.getField(parseInt(move[0]), parseInt(move[2]));
-                    const mirror = this.canMove(field, newField);
-                    return !this.isCheck(mirror);
-                });
+                const possibleMoves = field.piece
+                .findLegalMoves(this.board, field)
+                .filter(move => this.canMove(field, move));
                 console.log(possibleMoves);
                 for (let move of possibleMoves) {
                     (document.getElementById(move) as HTMLDivElement).className += ` possibleMove`;
@@ -129,7 +111,17 @@ class Game {
             }
         }
     }
+    
+    canMove(field: Field, move: string) {
+            const copyBoard = this.board;
+            const newField = copyBoard.getField(parseInt(move[0]), parseInt(move[2]));
 
+            copyBoard.fields[field.x][field.y].piece = null;
+            // copyBoard.fields[newField.x][newField.y] = field;
+            copyBoard.fields[newField.x][newField.y].piece = field.piece;
+            return !this.isCheck(copyBoard);
+        }
+    
     movePiece(field: Field, newField: Field) {
         if (field.piece) {
             field.piece.move(field, newField);
