@@ -11,7 +11,7 @@ abstract class Piece implements BasicPiece {
         this.hasPieceMoved = false;
     }
 
-    move(oldField: Field, newField: Field, board: Board): void {
+    move(oldField: Field, newField: Field, board?: Board): void {
         oldField.piece = null;
         (document.getElementById(`${oldField.x},${oldField.y}`) as HTMLDivElement).innerHTML = '';
 
