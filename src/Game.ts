@@ -28,11 +28,10 @@ class Game {
         this.movePiece(field, newField);
         this.promotePawn(newField);
         this.updateEnpassantStatus();
-        this.movePiece(field, move);
-        this.isCheck();
         this.changeTurn();
+        this.isCheck();
+        if(this.isCheck()) this.backlightKing(this.board)
         this.changeClock();
-        // this.canMove(field, newField)
     }
     
     promotePawn(newField: Field): void {
@@ -111,15 +110,29 @@ class Game {
             }
         }
     }
+
+    backlightKing(board: Board) {
+        const kingPosition = this.getKingPosition(this.turn, board);
+        const kingField = document.getElementById(kingPosition);
+
+        kingField?.animate({ backgroundColor: "#ff2525", offset: 0.5 }, { duration: 1200, iterations: 3 });
+    }
     
     canMove(field: Field, move: string) {
             const copyBoard = this.board;
             const newField = copyBoard.getField(parseInt(move[0]), parseInt(move[2]));
-
+            const x = field.piece
             copyBoard.fields[field.x][field.y].piece = null;
-            // copyBoard.fields[newField.x][newField.y] = field;
-            copyBoard.fields[newField.x][newField.y].piece = field.piece;
-            return !this.isCheck(copyBoard);
+
+            copyBoard.fields[newField.x][newField.y].piece = x;
+
+            const a = !this.isCheck(copyBoard);
+            console.log(a)
+            console.log(this.turn);
+
+            copyBoard.fields[field.x][field.y].piece = x;
+            copyBoard.fields[newField.x][newField.y].piece = null;
+            return a
         }
     
     movePiece(field: Field, newField: Field) {
@@ -155,23 +168,11 @@ class Game {
     }
 
     isCheck(board: Board = this.board) {
-        let isCheck = false;
-
-        ['white', 'black'].forEach(side => {
-            const counterSide = side === 'white' ? 'black' : 'white';
-            const kingPosition = this.getKingPosition(counterSide, board);
-
-            const kingField = document.getElementById(kingPosition);
-
-            const isChecked = this.allAttackingMovesBySide(side, board).includes(kingPosition);
-
-            if(isChecked) {
-                kingField?.animate({ backgroundColor: "#ff2525", offset: 0.5 }, { duration: 1200, iterations: 3 });
-                isCheck = true;
-            }
-        })
+        const counterSide = this.turn === 'white' ? 'black' : 'white';
+        const kingPosition = this.getKingPosition(this.turn, board);
+        const isChecked = this.allAttackingMovesBySide(counterSide, board).includes(kingPosition);
         
-        return isCheck;
+        return isChecked ? true : false
     }
 
     changeClock(): void {
