@@ -94,10 +94,8 @@ class Game {
     touched(e: MouseEvent) {
         const target = e.currentTarget;
         if (target) {
-           
             const x: number = parseInt((target as HTMLDivElement).id[0]);
             const y: number = parseInt((target as HTMLDivElement).id[2]);
-
             const field: Field = this.board.getField(x, y);
             if (!field?.piece) return;
 
