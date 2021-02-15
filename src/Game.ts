@@ -31,7 +31,6 @@ class Game {
     }
 
     afterMove(field: Field, move: string) {
-
         const newField = this.board.getField(parseInt(move[0]), parseInt(move[2]));
 
         this.movePiece(field, newField);
@@ -42,11 +41,12 @@ class Game {
         this.isCheck();
         if(this.isCheck()) this.backlightKing(this.board)
         this.changeClock();
+        this.isMat();
     }
     
     promotePawn(newField: Field): void {
         const color = this.turn === 'white' ? 0 : 7
-        // const field = newField.piece?.side === 'white' ? 0 : 7 
+
         for (let y = 0; y < this.board.boardSize; y++) {
             if (this.board.fields[color][y].piece instanceof Pawn) {
                 this.board.fields[color][y].piece = new Queen(this.turn);
@@ -74,7 +74,8 @@ class Game {
     }
 
     allPossibleMovesBySide(color: string) {
-        return this.getAllPiecesBySide(color).map(field => field?.piece?.findLegalMoves(this.board, field)).flat()
+        return this.getAllPiecesBySide(color).map(field => field?.piece?.findLegalMoves(this.board, field)
+            .filter(move => this.canMove(field, move))).flat()
     }
     
     setup() {
@@ -112,8 +113,7 @@ class Game {
             if (this.turn === field.piece.side) {
                 const possibleMoves = field.piece
                 .findLegalMoves(this.board, field)
-                .filter(move => this.canMove(field, move));
-                console.log(possibleMoves);
+                .filter(move => this.canMove(field, move))
                 for (let move of possibleMoves) {
                     (document.getElementById(move) as HTMLDivElement).className += ` possibleMove`;
                     (document.getElementById(move) as HTMLDivElement).addEventListener('click', () => {
@@ -122,6 +122,10 @@ class Game {
                 }
             }
         }
+    }
+
+    isMat() {
+        return this.isCheck() && !this.allPossibleMovesBySide(this.turn)
     }
 
     backlightKing(board: Board) {
