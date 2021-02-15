@@ -104,7 +104,7 @@ class Game {
             if (this.turn === field.piece.side) {
                 const possibleMoves = field.piece.findLegalMoves(this.board, field);
                 const allPossibleMoveElements = document.querySelectorAll('.possibleMove');
-                allPossibleMoveElements.forEach(e => (e as HTMLDListElement).classList.remove('possibleMove'))
+                allPossibleMoveElements.forEach(e => (e as HTMLDListElement).classList.remove('possibleMove'));
                 for (let move of possibleMoves) {
                     (document.getElementById(move) as HTMLDivElement).classList.add('possibleMove');
                     (document.getElementById(move) as HTMLDivElement).addEventListener('click', () => {
