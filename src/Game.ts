@@ -31,9 +31,6 @@ class Game {
         this.startGame.startGame();
         this.logo = new Logo();
         this.logo.render();
-        this.endGame = new EndGame(this.turn === 'white' ? 'black' : 'white');
-        this.endGame.render();
-        this.endGame.gameOverScreenTrigger();
     }
 
     afterMove(field: Field, move: string) {
@@ -48,7 +45,11 @@ class Game {
         if (this.isCheck()) this.backlightKing(this.board)
         this.changeClock();
         this.isMat();
-        if (this.isMat()) this.endGame.gameOverScreenTrigger();
+        if (this.isMat()) {
+            this.endGame = new EndGame(this.turn === 'white' ? 'black' : 'white');
+            this.endGame.render();
+            this.endGame.gameOverScreenTrigger();
+        };
     }
 
     promotePawn(newField: Field): void {

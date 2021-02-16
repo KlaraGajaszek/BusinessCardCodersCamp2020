@@ -2,8 +2,7 @@ class EndGame {
   winner: string;
 
   constructor(winner: string) {
-    this.winner = winner,
-      this.render
+    this.winner = winner;
   }
 
   public gameOverRender() {
@@ -26,16 +25,11 @@ class EndGame {
   public gameOverScreenTrigger() {
     const wrapper = document.getElementById('wrapper')! as HTMLDivElement;
     const gameOver = document.getElementById('game-over')! as HTMLDivElement;
-    const whiteClock = document.querySelector('.whiteClock')! as HTMLDivElement;
-    whiteClock.addEventListener('click', () => {
-      wrapper.style.filter = 'brightness(0.4) blur(10px';
-      gameOver.style.zIndex = '1';
-      setTimeout(() => {
-        gameOver.style.opacity = '1';
-      }, 200)
-
-    })
-
+    wrapper.style.filter = 'brightness(0.4) blur(10px';
+    gameOver.style.zIndex = '1';
+    setTimeout(() => {
+      gameOver.style.opacity = '1';
+    }, 200);
   }
 
 
