@@ -71,7 +71,6 @@ class Game {
  
     getAllPiecesBySide(color: string, board: Board = this.board): Field[] {
         return board.fields.flat().filter(field => field?.piece && field.piece.side === color)
-
     }
 
     allPossibleMovesBySide(color: string) {
@@ -102,17 +101,16 @@ class Game {
         }
     }
 
-    
     touched(e: MouseEvent) {
         const target = e.currentTarget;
         if (target) {
             const x: number = parseInt((target as HTMLDivElement).id[0]);
             const y: number = parseInt((target as HTMLDivElement).id[2]);
             const field: Field = this.board.getField(x, y);
+
             if (!field?.piece) return;
             
             if (this.turn === field.piece.side) {
-
                 const possibleMoves = field.piece
                 .findLegalMoves(this.board, field)
                 .filter(move => this.canMove(field, move))
@@ -121,8 +119,7 @@ class Game {
                 for (let move of possibleMoves) {
                     (document.getElementById(move) as HTMLDivElement).classList.add('possibleMove');
                     (document.getElementById(move) as HTMLDivElement).addEventListener('click', () => {
-                        this.afterMove(field, move);
-                       
+                        this.afterMove(field, move);  
                     });
                 }
             }
