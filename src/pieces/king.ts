@@ -117,7 +117,7 @@ class King extends Piece {
             let rookCastling = board.getField(oldField.x, 7)?.piece;
             board.getField(oldField.x, 7).piece = null;
             (document.getElementById(`${oldField.x},7`) as HTMLDivElement).innerHTML = '';
-            board.getField(oldField.x, 3).piece = rookCastling;
+            board.getField(oldField.x, 5).piece = rookCastling;
             (document.getElementById(`${oldField.x},5`) as HTMLDivElement).innerHTML = `<i class="fas fa-chess-rook ${this.side}"></i>`;
         } else if (newField.y - oldField.y === -2) {
             let rookCastling = board.getField(oldField.x, 0).piece;

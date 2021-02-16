@@ -35,7 +35,6 @@ class Game {
 
     afterMove(field: Field, move: string) {
         const newField = this.board.getField(parseInt(move[0]), parseInt(move[2]));
-
         this.movePiece(field, newField);
         this.promotePawn(newField);
         this.updateEnpassantStatus();
@@ -54,7 +53,6 @@ class Game {
 
     promotePawn(newField: Field): void {
         const color = this.turn === 'white' ? 0 : 7
-
         for (let y = 0; y < this.board.boardSize; y++) {
             if (this.board.fields[color][y].piece instanceof Pawn) {
                 this.board.fields[color][y].piece = new Queen(this.turn);
@@ -116,16 +114,19 @@ class Game {
             const y: number = parseInt((target as HTMLDivElement).id[2]);
 
             const field: Field = this.board.getField(x, y);
+
             if (!field?.piece) return;
 
             if (this.turn === field.piece.side) {
                 const possibleMoves = field.piece
-                    .findLegalMoves(this.board, field)
-                    .filter(move => this.canMove(field, move))
+                .findLegalMoves(this.board, field)
+                .filter(move => this.canMove(field, move))
+                const allPossibleMoveElements = document.querySelectorAll('.possibleMove');
+                allPossibleMoveElements.forEach(e => (e as HTMLDListElement).classList.remove('possibleMove'));
                 for (let move of possibleMoves) {
-                    (document.getElementById(move) as HTMLDivElement).className += ` possibleMove`;
+                    (document.getElementById(move) as HTMLDivElement).classList.add('possibleMove');
                     (document.getElementById(move) as HTMLDivElement).addEventListener('click', () => {
-                        this.afterMove(field, move);
+                        this.afterMove(field, move);  
                     });
                 }
             }
@@ -133,7 +134,7 @@ class Game {
     }
 
     isMat() {
-        return this.isCheck() && !this.allPossibleMovesBySide(this.turn)
+        return this.isCheck() && !this.allPossibleMovesBySide(this.turn);
     }
 
     backlightKing(board: Board) {
@@ -160,7 +161,7 @@ class Game {
 
     movePiece(field: Field, newField: Field) {
         if (field.piece) {
-            field.piece.move(field, newField);
+            field.piece.move(field, newField, this.board);
         }
         for (let x = 0; x < this.board.boardSize; x++) {
             for (let y = 0; y < this.board.boardSize; y++) {
