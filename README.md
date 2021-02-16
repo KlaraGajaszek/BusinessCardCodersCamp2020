@@ -1,1 +1,1 @@
-# CC2020Chess
+# CodersCamp2020Chess
