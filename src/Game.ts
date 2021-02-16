@@ -113,7 +113,8 @@ class Game {
             
             if (this.turn === field.piece.side) {
 
-                const possibleMoves = field.piece.findLegalMoves(this.board, field)
+                const possibleMoves = field.piece
+                .findLegalMoves(this.board, field)
                 .filter(move => this.canMove(field, move))
                 const allPossibleMoveElements = document.querySelectorAll('.possibleMove');
                 allPossibleMoveElements.forEach(e => (e as HTMLDListElement).classList.remove('possibleMove'));
