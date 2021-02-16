@@ -33,7 +33,6 @@ class Game {
 
     afterMove(field: Field, move: string) {
         const newField = this.board.getField(parseInt(move[0]), parseInt(move[2]));
-
         this.movePiece(field, newField);
         this.promotePawn(newField);
         this.updateEnpassantStatus();
@@ -47,7 +46,6 @@ class Game {
     
     promotePawn(newField: Field): void {
         const color = this.turn === 'white' ? 0 : 7
-
         for (let y = 0; y < this.board.boardSize; y++) {
             if (this.board.fields[color][y].piece instanceof Pawn) {
                 this.board.fields[color][y].piece = new Queen(this.turn);
@@ -69,7 +67,7 @@ class Game {
     allAttackingMovesBySide(color: string, board: Board = this.board) {
         return this.getAllPiecesBySide(color).map(field => field?.piece?.findAttackingMoves(board, field)).flat()
     }
-    
+ 
     getAllPiecesBySide(color: string, board: Board = this.board): Field[] {
         return board.fields.flat().filter(field => field?.piece && field.piece.side === color)
     }
@@ -101,24 +99,26 @@ class Game {
             }
         }
     }
-    
+
     touched(e: MouseEvent) {
         const target = e.currentTarget;
         if (target) {
             const x: number = parseInt((target as HTMLDivElement).id[0]);
             const y: number = parseInt((target as HTMLDivElement).id[2]);
-            
             const field: Field = this.board.getField(x, y);
+
             if (!field?.piece) return;
             
             if (this.turn === field.piece.side) {
                 const possibleMoves = field.piece
                 .findLegalMoves(this.board, field)
                 .filter(move => this.canMove(field, move))
+                const allPossibleMoveElements = document.querySelectorAll('.possibleMove');
+                allPossibleMoveElements.forEach(e => (e as HTMLDListElement).classList.remove('possibleMove'));
                 for (let move of possibleMoves) {
-                    (document.getElementById(move) as HTMLDivElement).className += ` possibleMove`;
+                    (document.getElementById(move) as HTMLDivElement).classList.add('possibleMove');
                     (document.getElementById(move) as HTMLDivElement).addEventListener('click', () => {
-                        this.afterMove(field, move);
+                        this.afterMove(field, move);  
                     });
                 }
             }
@@ -126,7 +126,7 @@ class Game {
     }
 
     isMat() {
-        return this.isCheck() && !this.allPossibleMovesBySide(this.turn)
+        return this.isCheck() && !this.allPossibleMovesBySide(this.turn);
     }
 
     backlightKing(board: Board) {
