@@ -33,7 +33,6 @@ class Game {
 
     afterMove(field: Field, move: string) {
         const newField = this.board.getField(parseInt(move[0]), parseInt(move[2]));
-
         this.movePiece(field, newField);
         this.promotePawn(newField);
         this.updateEnpassantStatus();
