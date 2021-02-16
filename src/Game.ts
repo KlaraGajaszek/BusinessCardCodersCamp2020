@@ -126,7 +126,7 @@ class Game {
     }
 
     isMat() {
-        return this.isCheck() && !this.allPossibleMovesBySide(this.turn)
+        return this.isCheck() && !this.allPossibleMovesBySide(this.turn);
     }
 
     backlightKing(board: Board) {
