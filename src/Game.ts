@@ -153,7 +153,7 @@ class Game {
     
     movePiece(field: Field, newField: Field) {
         if (field.piece) {
-            field.piece.move(field, newField);
+            field.piece.move(field, newField, this.board);
         }
         for (let x = 0; x < this.board.boardSize; x++) {
             for (let y = 0; y < this.board.boardSize; y++) {
