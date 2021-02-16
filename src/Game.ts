@@ -44,11 +44,7 @@ class Game {
         if (this.isCheck()) this.backlightKing(this.board)
         this.changeClock();
         this.isMat();
-        if (this.isMat()) {
-            this.endGame = new EndGame(this.turn === 'white' ? 'black' : 'white');
-            this.endGame.render();
-            this.endGame.gameOverScreenTrigger();
-        };
+        if (this.isMat()) this.endGameModal()
     }
 
     promotePawn(newField: Field): void {
@@ -59,6 +55,12 @@ class Game {
                 this.board.fields[color][y].piece?.render(newField);
             }
         }
+    }
+
+    endGameModal() {
+        this.endGame = new EndGame(this.turn === 'white' ? 'black' : 'white');
+        this.endGame.render();
+        this.endGame.gameOverScreenTrigger();
     }
 
     updateEnpassantStatus() {
@@ -134,7 +136,7 @@ class Game {
     }
 
     isMat() {
-        return this.isCheck() && !this.allPossibleMovesBySide(this.turn);
+        return this.isCheck() && this.allPossibleMovesBySide(this.turn).length === 0;
     }
 
     backlightKing(board: Board) {
