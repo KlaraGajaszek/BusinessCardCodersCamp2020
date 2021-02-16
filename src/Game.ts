@@ -1,3 +1,4 @@
+import * as _ from 'lodash'
 import Queen from './pieces/queen';
 import Board from './Board';
 import Clock from './clock';
@@ -136,7 +137,7 @@ class Game {
     }
     
     canMove(field: Field, move: string) { // TO FIX
-            const copyBoard = this.board;
+            const copyBoard = _.cloneDeep(this.board);
             const newField = copyBoard.getField(parseInt(move[0]), parseInt(move[2]));
             const piece = field.piece
             copyBoard.fields[field.x][field.y].piece = null;
