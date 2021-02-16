@@ -114,7 +114,7 @@ class King extends Piece {
         super.move(oldField, newField, board);
 
         if (newField.y - oldField.y === 2) {
-            let rookCastling = board.getField(oldField.x, 7).piece;
+            let rookCastling = board.getField(oldField.x, 7)?.piece;
             board.getField(oldField.x, 7).piece = null;
             (document.getElementById(`${oldField.x},7`) as HTMLDivElement).innerHTML = '';
             board.getField(oldField.x, 3).piece = rookCastling;

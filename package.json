@@ -9,7 +9,7 @@
     "test": "jest",
     "test:watch": "jest --watch",
     "dev": "parcel index.html ",
-    "build": "parcel build dist",
+    "build": "tsc --noEmit && parcel build index.html --public-url ./",
     "format": "prettier --write \"src/**/*.js\" \"src/**/*.ts\" \"test/**/*.js\" \"test/**/*.ts\""
   },
   "author": "",
@@ -40,7 +40,9 @@
   },
   "dependencies": {
     "@parcel/transformer-typescript-tsc": "^2.0.0-alpha.3",
-    "@types/parcel-env": "0.0.0"
+    "@types/lodash": "^4.14.168",
+    "@types/parcel-env": "0.0.0",
+    "lodash": "^4.17.20"
   },
   "include": [
     "app/**/*"
