@@ -6,6 +6,7 @@ import Field from './Field';
 import Pawn from './pieces/pawn';
 import StartGame from './startScreen';
 import Logo from './logo';
+import EndGame from './gameOver';
 
 class Game {
     board: Board;
@@ -13,7 +14,8 @@ class Game {
     blackClock: Clock;
     turn: string;
     startGame: StartGame;
-    logo: Logo
+    logo: Logo;
+    endGame: EndGame
 
     constructor() {
         this.turn = "white";
@@ -29,6 +31,9 @@ class Game {
         this.startGame.startGame();
         this.logo = new Logo();
         this.logo.render();
+        this.endGame = new EndGame(this.turn === 'white' ? 'black' : 'white');
+        this.endGame.render();
+        this.endGame.gameOverScreenTrigger();
     }
 
     afterMove(field: Field, move: string) {
@@ -40,11 +45,12 @@ class Game {
         this.changeTurn();
         this.isStalemate();
         this.isCheck();
-        if(this.isCheck()) this.backlightKing(this.board)
+        if (this.isCheck()) this.backlightKing(this.board)
         this.changeClock();
         this.isMat();
+        if (this.isMat()) this.endGame.gameOverScreenTrigger();
     }
-    
+
     promotePawn(newField: Field): void {
         const color = this.turn === 'white' ? 0 : 7
 
@@ -65,11 +71,11 @@ class Game {
             }
         }
     }
-    
+
     allAttackingMovesBySide(color: string, board: Board = this.board) {
         return this.getAllPiecesBySide(color).map(field => field?.piece?.findAttackingMoves(board, field)).flat()
     }
-    
+
     getAllPiecesBySide(color: string, board: Board = this.board): Field[] {
         return board.fields.flat().filter(field => field?.piece && field.piece.side === color)
     }
@@ -78,7 +84,7 @@ class Game {
         return this.getAllPiecesBySide(color).map(field => field?.piece?.findLegalMoves(this.board, field)
             .filter(move => this.canMove(field, move))).flat()
     }
-    
+
     setup() {
         const fields = this.board.fields;
         for (let x = 0; x < this.board.boardSize; x++) {
@@ -87,34 +93,34 @@ class Game {
                 square.id = `${x},${y}`;
                 square.className = 'square';
                 square.className += x % 2 == y % 2 ? ' light' : ' dark';
-                
+
                 let field = fields[x][y];
                 if (!field.isEmpty()) {
                     square.innerHTML = field.piece!.display;
                 }
-                
+
                 square.addEventListener('click', (e) => {
                     this.touched(e);
                 });
-                
+
                 document.getElementById('board')?.appendChild(square);
             }
         }
     }
-    
+
     touched(e: MouseEvent) {
         const target = e.currentTarget;
         if (target) {
             const x: number = parseInt((target as HTMLDivElement).id[0]);
             const y: number = parseInt((target as HTMLDivElement).id[2]);
-            
+
             const field: Field = this.board.getField(x, y);
             if (!field?.piece) return;
-            
+
             if (this.turn === field.piece.side) {
                 const possibleMoves = field.piece
-                .findLegalMoves(this.board, field)
-                .filter(move => this.canMove(field, move))
+                    .findLegalMoves(this.board, field)
+                    .filter(move => this.canMove(field, move))
                 for (let move of possibleMoves) {
                     (document.getElementById(move) as HTMLDivElement).className += ` possibleMove`;
                     (document.getElementById(move) as HTMLDivElement).addEventListener('click', () => {
@@ -135,22 +141,22 @@ class Game {
 
         kingField?.animate({ backgroundColor: "#ff2525", offset: 0.5 }, { duration: 1200, iterations: 3 });
     }
-    
+
     canMove(field: Field, move: string) { // TO FIX
-            const copyBoard = _.cloneDeep(this.board);
-            const newField = copyBoard.getField(parseInt(move[0]), parseInt(move[2]));
-            const piece = field.piece
-            copyBoard.fields[field.x][field.y].piece = null;
+        const copyBoard = _.cloneDeep(this.board);
+        const newField = copyBoard.getField(parseInt(move[0]), parseInt(move[2]));
+        const piece = field.piece
+        copyBoard.fields[field.x][field.y].piece = null;
 
-            copyBoard.fields[newField.x][newField.y].piece = piece;
+        copyBoard.fields[newField.x][newField.y].piece = piece;
 
-            const isCheck = !this.isCheck(copyBoard);
+        const isCheck = !this.isCheck(copyBoard);
 
-            copyBoard.fields[field.x][field.y].piece = piece;
-            copyBoard.fields[newField.x][newField.y].piece = null;
-            return isCheck
-        }
-    
+        copyBoard.fields[field.x][field.y].piece = piece;
+        copyBoard.fields[newField.x][newField.y].piece = null;
+        return isCheck
+    }
+
     movePiece(field: Field, newField: Field) {
         if (field.piece) {
             field.piece.move(field, newField);
@@ -187,7 +193,7 @@ class Game {
         const counterSide = this.turn === 'white' ? 'black' : 'white';
         const kingPosition = this.getKingPosition(this.turn, board);
         const isChecked = this.allAttackingMovesBySide(counterSide, board).includes(kingPosition);
-        
+
         return isChecked ? true : false
     }
 
